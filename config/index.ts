@@ -39,7 +39,7 @@ export const siteConfig: Metadata = {
     url: "https://github.com/Shivam154CO",
   },
   icons: {
-    icon: "/profile1.jpg",      // your favicon in public/vlogos.png
-    shortcut: "/logos.jpg",  // optional shortcut icon
+    icon: "/profile1.jpg",
+    shortcut: "/logos.jpg",
   },
 } as const;

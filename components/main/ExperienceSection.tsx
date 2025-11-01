@@ -22,6 +22,7 @@ interface TimelineItemData {
     impact: 'High' | 'Medium' | 'Low';
     order_id: number;
 }
+
 const fetchTimelineData = async (): Promise<TimelineItemData[]> => {
     let { data, error } = await supabase
         .from('timeline_items')
@@ -52,7 +53,6 @@ const fetchTimelineData = async (): Promise<TimelineItemData[]> => {
 
     return validatedData;
 };
-
 
 const BriefcaseIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -89,6 +89,13 @@ const SparkleIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSV
     <path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.287L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.287Z"/>
   </svg>
 );
+
+const FilterIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
+  <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+  </svg>
+);
+
 const FloatingParticles = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -110,6 +117,7 @@ const FloatingParticles = () => {
     </div>
   );
 };
+
 interface TimelineItemProps {
     item: TimelineItemData;
     isLast: boolean;
@@ -128,6 +136,7 @@ const TimelineItem = ({ item, isLast, index, isActive, onActivate }: TimelineIte
   
   const [isExpanded, setIsExpanded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -323,15 +332,19 @@ const TimelineItem = ({ item, isLast, index, isActive, onActivate }: TimelineIte
 
 export const ExperienceSection = () => {
     const [timelineData, setTimelineData] = useState<TimelineItemData[]>([]);
+    const [filteredData, setFilteredData] = useState<TimelineItemData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [activeFilter, setActiveFilter] = useState<'all' | 'experience' | 'education'>('all');
+
     const loadData = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
             const data = await fetchTimelineData();
             setTimelineData(data);
+            applyFilter(activeFilter, data);
             if (data.length > 0) {
                 setActiveIndex(prev => Math.min(prev, data.length - 1)); 
             } else {
@@ -342,7 +355,29 @@ export const ExperienceSection = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [activeFilter]);
+
+    const applyFilter = (filter: 'all' | 'experience' | 'education', data: TimelineItemData[] = timelineData) => {
+        switch (filter) {
+            case 'experience':
+                setFilteredData(data.filter(item => item.type === 'Experience'));
+                break;
+            case 'education':
+                setFilteredData(data.filter(item => item.type === 'Education'));
+                break;
+            case 'all':
+            default:
+                setFilteredData(data);
+                break;
+        }
+    };
+
+    const handleFilterChange = (filter: 'all' | 'experience' | 'education') => {
+        setActiveFilter(filter);
+        applyFilter(filter);
+        setActiveIndex(0);
+    };
+
     useEffect(() => {
         loadData();
         const channel = supabase
@@ -360,6 +395,10 @@ export const ExperienceSection = () => {
             supabase.removeChannel(channel);
         };
     }, [loadData]);
+
+    const experienceCount = timelineData.filter(item => item.type === 'Experience').length;
+    const educationCount = timelineData.filter(item => item.type === 'Education').length;
+
     if (loading) {
         return (
             <section id="experience" className="relative flex flex-col items-center justify-center py-16 min-h-screen font-sans text-white">
@@ -394,46 +433,94 @@ export const ExperienceSection = () => {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl relative z-10">
         
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="relative inline-block">
             <h2 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-4 leading-tight">
               My Journey
             </h2>
             <div className="absolute -inset-3 bg-gradient-to-r from-cyan-400/10 to-purple-600/10 blur-xl rounded-full opacity-30" />
           </div>
-          <p className="text-lg text-gray-400 max-w-md mx-auto leading-relaxed">
+          <p className="text-lg text-gray-400 max-w-md mx-auto leading-relaxed mb-8">
             Timeline of growth and achievements
           </p>
+
+          <div className="flex justify-center mb-8">
+            <div className="flex flex-wrap justify-center gap-2 p-2 rounded-xl bg-white/5 backdrop-blur-xl border border-white/10">
+              <button
+                onClick={() => handleFilterChange('all')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                  activeFilter === 'all'
+                    ? "bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <FilterIcon className="w-4 h-4" />
+                All ({timelineData.length})
+              </button>
+              <button
+                onClick={() => handleFilterChange('experience')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                  activeFilter === 'experience'
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <BriefcaseIcon className="w-4 h-4" />
+                Experience ({experienceCount})
+              </button>
+              <button
+                onClick={() => handleFilterChange('education')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                  activeFilter === 'education'
+                    ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <GraduationCapIcon className="w-4 h-4" />
+                Education ({educationCount})
+              </button>
+            </div>
+          </div>
         </div>
+
         <div className="relative">
           <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400/10 via-purple-500/20 to-cyan-400/10" />
           
           <div className="relative">
-            {timelineData.map((item, index) => (
-              <TimelineItem
-                key={item.id}
-                item={item}
-                isLast={index === timelineData.length - 1}
-                index={index}
-                isActive={activeIndex === index}
-                onActivate={setActiveIndex}
+            {filteredData.length > 0 ? (
+              filteredData.map((item, index) => (
+                <TimelineItem
+                  key={item.id}
+                  item={item}
+                  isLast={index === filteredData.length - 1}
+                  index={index}
+                  isActive={activeIndex === index}
+                  onActivate={setActiveIndex}
+                />
+              ))
+            ) : (
+              <div className="text-center py-12 text-gray-500">
+                No {activeFilter === 'experience' ? 'experience' : 'education'} items found.
+              </div>
+            )}
+          </div>
+        </div>
+
+        {filteredData.length > 0 && (
+          <div className="flex justify-center gap-1.5 mt-12">
+            {filteredData.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`w-8 h-1.5 rounded-full transition-all duration-300 backdrop-blur-lg border ${
+                  activeIndex === index 
+                    ? 'bg-gradient-to-r from-cyan-500 to-purple-500 scale-110 border-white/30' 
+                    : 'bg-white/10 border-white/10 hover:bg-white/20'
+                }`}
               />
             ))}
           </div>
-        </div>
-        <div className="flex justify-center gap-1.5 mt-12">
-          {timelineData.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-8 h-1.5 rounded-full transition-all duration-300 backdrop-blur-lg border ${
-                activeIndex === index 
-                  ? 'bg-gradient-to-r from-cyan-500 to-purple-500 scale-110 border-white/30' 
-                  : 'bg-white/10 border-white/10 hover:bg-white/20'
-              }`}
-            />
-          ))}
-        </div>
+        )}
       </div>
       <style jsx>{`
         @keyframes float {
@@ -444,7 +531,7 @@ export const ExperienceSection = () => {
           animation: float linear infinite;
         }
         .animate-ping {
-            animation-duration: 3s; /* Adjusted ping duration for a slower effect */
+            animation-duration: 3s;
         }
       `}</style>
     </section>

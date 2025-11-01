@@ -213,9 +213,8 @@ export const CertificatesSection = () => {
         const fetchCertificates = async () => {
             setLoading(true);
             try {
-                // FIXED: Query from the correct table name
                 let { data, error } = await supabase
-                    .from('achievements_certificates') // Make sure this matches your table name
+                    .from('achievements_certificates')
                     .select('*')
                     .order('id', { ascending: true });
 
@@ -242,13 +241,10 @@ export const CertificatesSection = () => {
         fetchCertificates();
     }, []);
 
-    // Get all types
     const allTypes = ["all", "certificate", "achievement"] as const;
     
-    // Get all available categories from the database
     const allCategories = ["All", ...Array.from(new Set(certificates.map((cert) => cert.category).filter(Boolean)))];
     
-    // Get categories for the currently selected type
     const getCategoriesForType = () => {
         if (activeType === "all") return allCategories;
         
@@ -263,7 +259,6 @@ export const CertificatesSection = () => {
         return typeMatch && categoryMatch;
     });
 
-    // Reset category to "All" when type changes
     useEffect(() => {
         setActiveCategory("All");
     }, [activeType]);
@@ -395,3 +390,4 @@ export default function App() {
         </div>
     );
 }
+
