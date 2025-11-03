@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = "https://zpcjcjqhhswcyaygtmxh.supabase.co";
@@ -110,10 +111,13 @@ export const CertificateCard = ({ certificate }: { certificate: Certificate }) =
                 <div className="lg:w-2/5 space-y-4">
                     <div className="relative group">
                         <div className="relative rounded-xl overflow-hidden border-2 border-white/20 shadow-lg">
-                            <img
+                            <Image
                                 src={certificate.image_url} 
                                 alt={`${certificate.title} ${certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}`}
-                                className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105" />
+                                width={300}
+                                height={160}
+                                className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
 
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-3">
                                 <a href={certificate.verification_url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm font-medium hover:bg-white/30 transition-all duration-300">
@@ -390,7 +394,3 @@ export default function App() {
         </div>
     );
 }
-
-
-
-
