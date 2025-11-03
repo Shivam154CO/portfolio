@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import { slideInFromLeft, slideInFromRight, slideInFromTop } from "@/lib/motion";
 import { StarsCanvas } from "@/components/main/star-background";
@@ -37,10 +38,13 @@ const ProfileVisual = ({ profileData }: { profileData: any }) => (
       <div
         className="w-full h-full rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-[0_0_80px_rgba(59,130,246,0.2)]"
       >
-        <img
+        <Image
           src={profileData?.profile_image || "/profile1.jpg"}
           alt="Profile"
+          width={256}
+          height={256}
           className="w-full h-full object-cover"
+          priority
         />
       </div>
     </div>
