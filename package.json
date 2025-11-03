@@ -7,14 +7,14 @@
   "author": {
     "name": "Shivam Pravin Pawar",
     "email": "shivampawar44330j@gmail.com",
-    "url": "https://github.com/shivam154co"
+    "url": "https://github.com/Shivam154CO"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shivam154co/portfolio.git"
+    "url": "https://github.com/Shivam154CO/portfolio.git"
   },
   "bugs": {
-    "url": "https://github.com/shivam154co/portfolio/issues",
+    "url": "https://github.com/Shivam154CO/portfolio/issues",
     "email": "shivampawar44330j@gmail.com"
   },
   "homepage": "https://github.com/shivam154co/portfolio#readme",
@@ -93,3 +93,4 @@
     "npm": ">=9.0.0"
   }
 }
+
