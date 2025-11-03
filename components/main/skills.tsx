@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { supabase } from '../../lib/supabaseClient';
 
 const SkillText = () => (
@@ -93,9 +94,11 @@ const SkillDataProvider = ({ src, name, width, height, index, category }: SkillD
           `}
         >
           {!imgError && src ? (
-            <img 
+            <Image 
               src={src} 
               alt={name}
+              width={32}
+              height={32}
               className="w-8 h-8 object-contain"
               onError={handleImageError}
             />
