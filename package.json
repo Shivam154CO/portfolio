@@ -1,19 +1,24 @@
 {
   "name": "space-portfolio",
   "version": "1.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "author": {
-    "name": "Sanidhya Kumar Verma",
-    "email": "sanidhya.verma12345@gmail.com",
-    "url": "https://github.com/sanidhyy"
-  },
   "description": "Welcome to my full stack Next.js 14 space portfolio.",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Shivam Pravin Pawar",
+    "email": "shivampawar44330j@gmail.com",
+    "url": "https://github.com/shivam154co"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shivam154co/portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shivam154co/portfolio/issues",
+    "email": "shivampawar44330j@gmail.com"
+  },
+  "homepage": "https://github.com/shivam154co/portfolio#readme",
+  
   "keywords": [
     "reactjs",
     "nextjs",
@@ -45,26 +50,13 @@
     "html",
     "css"
   ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sanidhyy/space-portfolioit"
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
   },
-  "homepage": "https://github.com/sanidhyy/space-portfolio#readme",
-  "bugs": {
-    "url": "https://github.com/sanidhyy/space-portfolio/issues",
-    "email": "sanidhya.verma12345@gmail.com"
-  },
-  "funding": [
-    {
-      "type": "patreon",
-      "url": "https://www.patreon.com/sanidhy"
-    },
-    {
-      "type": "Buy me a coffee",
-      "url": "https://www.buymeacoffee.com/sanidhy"
-    }
-  ],
   "dependencies": {
     "@flaticon/flaticon-uicons": "^3.3.1",
     "@heroicons/react": "^2.2.0",
@@ -77,23 +69,27 @@
     "lottie-react": "^2.4.1",
     "meshline": "^3.3.1",
     "next": "^14.2.33",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.5.3",
     "tailwind-merge": "^2.2.0",
     "three": "^0.160.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/node": "^20.10.8",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
     "@types/three": "^0.180.0",
-    "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.0.4",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
   }
 }
