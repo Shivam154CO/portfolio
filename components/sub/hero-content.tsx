@@ -14,19 +14,21 @@ export const HeroContent = () => {
       className="flex flex-col-reverse md:flex-row items-center justify-center px-6 md:px-20 mt-16 md:mt-40 w-full z-[20]"
     > 
       <div className="w-full flex flex-col gap-5 justify-center m-auto text-center md:text-start">
-       <motion.div
-  variants={slideInFromTop}
-  className="flex items-center justify-center md:justify-start gap-2 py-[6px] px-[6px] border border-[#7042f88b] opacity-[0.9] rounded-lg max-w-fit mx-auto md:mx-0"
->
-  <img
-    src="/coding.png"
-    alt="logo"
-    className="h-6 w-6 md:h-5 md:w-5 object-contain"
-  />
-  <h1 className="text-[12px] md:text-[13px] text-gray-200 font-semibold">
-    Fullstack Developer
-  </h1>        
-  </motion.div>
+        <motion.div
+          variants={slideInFromTop}
+          className="flex items-center justify-center md:justify-start gap-2 py-[6px] px-[6px] border border-[#7042f88b] opacity-[0.9] rounded-lg max-w-fit mx-auto md:mx-0"
+        >
+          <Image
+            src="/coding.png"
+            alt="coding icon"
+            width={24}
+            height={24}
+            className="h-6 w-6 md:h-5 md:w-5 object-contain"
+          />
+          <h1 className="text-[12px] md:text-[13px] text-gray-200 font-semibold">
+            Fullstack Developer
+          </h1>        
+        </motion.div>
         <motion.h1
           variants={slideInFromLeft(0.5)}
           className="text-3xl sm:text-4xl md:text-6xl font-bold text-white max-w-[600px] leading-tight"
@@ -46,13 +48,13 @@ export const HeroContent = () => {
         >
           I&apos;m a Full Stack Software Engineer specializing in building modern mobile and web applications. Check out my resume.
         </motion.p>
-      <motion.a
-  variants={slideInFromLeft(1)}
-  href="#projects"
-  className="py-4 px-5 sm:px-6 bg-transparent border-[#7D43FF] border-2 text-white text-base sm:text-base font-medium rounded-full shadow-lg transition-transform hover:scale-105 max-w-[110px] sm:max-w-[180px] mx-auto md:mx-0 flex items-center justify-center"
->Resume
-</motion.a>
-
+        <motion.a
+          variants={slideInFromLeft(1)}
+          href="#projects"
+          className="py-4 px-5 sm:px-6 bg-transparent border-[#7D43FF] border-2 text-white text-base sm:text-base font-medium rounded-full shadow-lg transition-transform hover:scale-105 max-w-[110px] sm:max-w-[180px] mx-auto md:mx-0 flex items-center justify-center"
+        >
+          Resume
+        </motion.a>
       </div>
       <motion.div
         variants={slideInFromRight(0.8)}
