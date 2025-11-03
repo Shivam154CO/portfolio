@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = "https://zpcjcjqhhswcyaygtmxh.supabase.co";
@@ -27,12 +27,13 @@ const fetchTimelineData = async (): Promise<TimelineItemData[]> => {
     let { data, error } = await supabase
         .from('timeline_items')
         .select('*')
-        .order('id', { ascending: true }); 
+        .order('order_id', { ascending: true }); 
 
     if (error) {
         console.error('Supabase fetch error:', error);
         return [];
     }
+    
     const validatedData: TimelineItemData[] = Array.isArray(data)
         ? data.map((item) => ({
             ...item,
@@ -126,7 +127,7 @@ interface TimelineItemProps {
     onActivate: (index: number) => void;
 }
 
-const TimelineItem = ({ item, isLast, index, isActive, onActivate }: TimelineItemProps): React.JSX.Element => {
+const TimelineItem = React.memo(({ item, isLast, index, isActive, onActivate }: TimelineItemProps): React.JSX.Element => {
   const isExperience = item.type === 'Experience';
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -154,15 +155,27 @@ const TimelineItem = ({ item, isLast, index, isActive, onActivate }: TimelineIte
     return () => observer.disconnect();
   }, [index, onActivate]);
 
+  const handleClick = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+  }, []);
+
   return (
     <div 
       ref={cardRef}
       className={`relative flex items-start gap-6 group cursor-pointer transition-all duration-500 ${
         isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-70'
       }`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={() => setIsExpanded(!isExpanded)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       <div className="flex flex-col items-center relative z-20 pt-1">
         <div className="relative">
@@ -328,15 +341,32 @@ const TimelineItem = ({ item, isLast, index, isActive, onActivate }: TimelineIte
       </div>
     </div>
   );
-};
+});
+
+TimelineItem.displayName = 'TimelineItem';
 
 export const ExperienceSection = () => {
     const [timelineData, setTimelineData] = useState<TimelineItemData[]>([]);
-    const [filteredData, setFilteredData] = useState<TimelineItemData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [activeFilter, setActiveFilter] = useState<'all' | 'experience' | 'education'>('all');
+
+    const applyFilter = useCallback((filter: 'all' | 'experience' | 'education', data: TimelineItemData[]) => {
+        switch (filter) {
+            case 'experience':
+                return data.filter(item => item.type === 'Experience');
+            case 'education':
+                return data.filter(item => item.type === 'Education');
+            case 'all':
+            default:
+                return data;
+        }
+    }, []);
+
+    const filteredData = useMemo(() => {
+        return applyFilter(activeFilter, timelineData);
+    }, [timelineData, activeFilter, applyFilter]);
 
     const loadData = useCallback(async () => {
         setLoading(true);
@@ -344,7 +374,6 @@ export const ExperienceSection = () => {
         try {
             const data = await fetchTimelineData();
             setTimelineData(data);
-            applyFilter(activeFilter, data);
             if (data.length > 0) {
                 setActiveIndex(prev => Math.min(prev, data.length - 1)); 
             } else {
@@ -355,49 +384,57 @@ export const ExperienceSection = () => {
         } finally {
             setLoading(false);
         }
-    }, [activeFilter]);
+    }, []);
 
-    const applyFilter = (filter: 'all' | 'experience' | 'education', data: TimelineItemData[] = timelineData) => {
-        switch (filter) {
-            case 'experience':
-                setFilteredData(data.filter(item => item.type === 'Experience'));
-                break;
-            case 'education':
-                setFilteredData(data.filter(item => item.type === 'Education'));
-                break;
-            case 'all':
-            default:
-                setFilteredData(data);
-                break;
-        }
-    };
-
-    const handleFilterChange = (filter: 'all' | 'experience' | 'education') => {
+    const handleFilterChange = useCallback((filter: 'all' | 'experience' | 'education') => {
         setActiveFilter(filter);
-        applyFilter(filter);
         setActiveIndex(0);
-    };
+    }, []);
 
+    const handleActivate = useCallback((index: number) => {
+        setActiveIndex(index);
+    }, []);
+
+    // Load data only once on component mount
     useEffect(() => {
         loadData();
+    }, [loadData]);
+
+    // Set up real-time subscription with debouncing
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+        
         const channel = supabase
             .channel('timeline_items_changes')
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'timeline_items' },
                 () => {
-                    console.log('Supabase Realtime event received. Re-fetching data...');
-                    loadData();
+                    // Debounce the reload to prevent rapid refreshes
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => {
+                        console.log('Supabase Realtime event received. Re-fetching data...');
+                        loadData();
+                    }, 1000); // 1 second debounce
                 }
             )
             .subscribe();
+
         return () => {
+            clearTimeout(timeoutId);
             supabase.removeChannel(channel);
         };
     }, [loadData]);
 
-    const experienceCount = timelineData.filter(item => item.type === 'Experience').length;
-    const educationCount = timelineData.filter(item => item.type === 'Education').length;
+    const experienceCount = useMemo(() => 
+        timelineData.filter(item => item.type === 'Experience').length, 
+        [timelineData]
+    );
+    
+    const educationCount = useMemo(() => 
+        timelineData.filter(item => item.type === 'Education').length, 
+        [timelineData]
+    );
 
     if (loading) {
         return (
@@ -409,7 +446,7 @@ export const ExperienceSection = () => {
     }
 
     if (error || timelineData.length === 0) {
-        const displayError = error || "The 'timeline_items' table is empty. Please insert data to view the timeline.";
+        const displayError = error || "The &apos;timeline_items&apos; table is empty. Please insert data to view the timeline.";
         return (
             <section id="experience" className="relative flex flex-col items-center justify-center py-16 min-h-screen font-sans text-red-400">
                 <p className="text-xl font-bold">Failed to Load Timeline</p>
@@ -417,7 +454,7 @@ export const ExperienceSection = () => {
                     Error Details: {displayError}
                 </p>
                 <p className="text-sm text-gray-400 mt-4">
-                    Check you Supabase 'timeline_items' table for data or RLS permissions.
+                    Check your Supabase &apos;timeline_items&apos; table for data or RLS permissions.
                 </p>
             </section>
         );
@@ -495,7 +532,7 @@ export const ExperienceSection = () => {
                   isLast={index === filteredData.length - 1}
                   index={index}
                   isActive={activeIndex === index}
-                  onActivate={setActiveIndex}
+                  onActivate={handleActivate}
                 />
               ))
             ) : (
@@ -544,6 +581,4 @@ export default function App() {
       <ExperienceSection />
     </div>
   );
-
 }
-
