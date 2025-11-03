@@ -1,24 +1,19 @@
 {
   "name": "space-portfolio",
   "version": "1.0.1",
-  "description": "Welcome to my full stack Next.js 14 space portfolio.",
   "private": true,
-  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "author": {
     "name": "Shivam Pravin Pawar",
     "email": "shivampawar44330j@gmail.com",
     "url": "https://github.com/Shivam154CO"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Shivam154CO/portfolio.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Shivam154CO/portfolio/issues",
-    "email": "shivampawar44330j@gmail.com"
-  },
-  "homepage": "https://github.com/shivam154co/portfolio#readme",
-  
+  "description": "Welcome to my full stack portfolio",
   "keywords": [
     "reactjs",
     "nextjs",
@@ -50,12 +45,15 @@
     "html",
     "css"
   ],
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "type-check": "tsc --noEmit"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shivam154CO/portfolio"
+  },
+  "homepage": "https://github.com/Shivam154CO/portfolio#readme",
+  "bugs": {
+    "url": "https://github.com/Shivam154CO/portfolio/issues",
+    "email": "shivampawar44330j@gmail.com"
   },
   "dependencies": {
     "@flaticon/flaticon-uicons": "^3.3.1",
@@ -69,28 +67,23 @@
     "lottie-react": "^2.4.1",
     "meshline": "^3.3.1",
     "next": "^14.2.33",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18",
+    "react-dom": "^18",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.5.3",
     "tailwind-merge": "^2.2.0",
     "three": "^0.160.1"
   },
   "devDependencies": {
-    "@types/node": "^20.10.8",
-    "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "@types/three": "^0.180.0",
-    "autoprefixer": "^10.4.16",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.0.4",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
-  },
-  "engines": {
-    "node": "20.19.5",
-    "npm": "11.6.0"
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
-
