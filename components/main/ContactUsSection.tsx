@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = "https://zpcjcjqhhswcyaygtmxh.supabase.co";
@@ -27,9 +28,11 @@ interface FlaticonIconProps {
 const FlaticonIcon: React.FC<FlaticonIconProps> = ({ iconUrl, isWhatsApp, className = "" }) => {
   return (
     <div className={`w-6 h-6 ${className}`}>
-      <img 
+      <Image 
         src={iconUrl} 
         alt="icon"
+        width={24}
+        height={24}
         className={`w-full h-full object-contain transition-all duration-300 ${
           isWhatsApp 
             ? 'filter-none' 
@@ -118,13 +121,13 @@ export default function App() {
           Get in Touch
         </h1>
         <p className="text-gray-400 text-base md:text-lg">
-          Feel free to reach out, I'll get back to you soon.
+          Feel free to reach out, I&apos;ll get back to you soon.
         </p>
       </div>
 
       <section id="contact-form-section" className="max-w-4xl w-full flex flex-col lg:flex-row gap-6 px-4">
         <div className="w-full lg:w-1/2 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl backdrop-blur-xl border border-white/10 shadow-xl p-6 transition-all duration-500 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]">
-          <h2 className={`text-2xl font-bold mb-2 ${TEXT_GRADIENT_CLASS}`}>Let's Connect</h2>
+          <h2 className={`text-2xl font-bold mb-2 ${TEXT_GRADIENT_CLASS}`}>Let&apos;s Connect</h2>
           <p className="text-gray-400 mb-4">
             Ready to start your project? Reach out through any of these channels.
           </p>
@@ -239,4 +242,3 @@ export default function App() {
     </div>
   );
 }
-
