@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabaseClient"; 
-import { CertificatesSection } from "@/components/main/CertificatesSection";
+import { CertificatesSection } from "@/components/main/AboutMeSection";
 
 export const metadata = {
   title: "Shivam Pawar",
@@ -19,3 +19,4 @@ export default function AboutPage() {
     </main>
   );
 }
+
