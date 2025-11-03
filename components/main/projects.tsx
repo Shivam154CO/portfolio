@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = "https://zpcjcjqhhswcyaygtmxh.supabase.co";
@@ -727,6 +728,17 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const handleSwipe = useCallback((direction: "next" | "prev") => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    onSwipe(direction);
+    
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 500);
+  }, [isTransitioning, onSwipe]);
+
   useEffect(() => {
     if (!images || images.length <= 1) return;
 
@@ -735,7 +747,7 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [images]);
+  }, [images, handleSwipe]);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setStartX(e.touches[0].clientX);
@@ -755,17 +767,6 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
 
   const handleTouchEnd = () => setIsDragging(false);
 
-  const handleSwipe = (direction: "next" | "prev") => {
-    if (isTransitioning) return;
-    
-    setIsTransitioning(true);
-    onSwipe(direction);
-    
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, 500);
-  };
-
   if (projectType === "mobile") {
     return (
       <div className="relative">
@@ -779,9 +780,11 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
             onTouchEnd={handleTouchEnd}
           >
             {images && images.length > 0 && (
-              <img
+              <Image
                 src={images[currentIndex]}
                 alt={`${title} screenshot ${currentIndex + 1}`}
+                width={192}
+                height={384}
                 className={`w-full h-full object-cover transition-all duration-500 ${
                   isTransitioning ? 'opacity-90 scale-105' : 'opacity-100 scale-100'
                 }`}
@@ -833,9 +836,11 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
             </div>
             <div className="bg-gray-900 border-2 border-gray-600 rounded-lg overflow-hidden h-40 sm:h-48 md:h-56 shadow-inner">
               {images && images.length > 0 && (
-                <img
+                <Image
                   src={images[currentIndex]}
                   alt={`${title} screenshot ${currentIndex + 1}`}
+                  width={320}
+                  height={224}
                   className={`w-full h-full object-cover transition-all duration-500 ${
                     isTransitioning ? 'opacity-90 scale-105' : 'opacity-100 scale-100'
                   }`}
@@ -887,9 +892,11 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
             </div>
             <div className="bg-gray-900 border-2 border-gray-600 rounded-lg overflow-hidden h-32 sm:h-40 md:h-48 shadow-inner">
               {images && images.length > 0 && (
-                <img
+                <Image
                   src={images[currentIndex]}
                   alt={`${title} screenshot ${currentIndex + 1}`}
+                  width={320}
+                  height={192}
                   className={`w-full h-full object-cover transition-all duration-500 ${
                     isTransitioning ? 'opacity-90 scale-105' : 'opacity-100 scale-100'
                   }`}
@@ -959,7 +966,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleSwipe = (direction: "next" | "prev") => {
+  const handleSwipe = useCallback((direction: "next" | "prev") => {
     if (!project.images || project.images.length === 0 || isTransitioning) return;
 
     setIsTransitioning(true);
@@ -981,7 +988,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     setTimeout(() => {
       setIsTransitioning(false);
     }, 500);
-  };
+  }, [project.images, isTransitioning]);
 
   const getProjectTypeColor = (type: string) => {
     switch (type) {
@@ -1129,6 +1136,14 @@ export const ProjectsSection = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
 
+  const applyFilter = useCallback((filter: FilterType, projectsList: Project[]) => {
+    if (filter === "all") {
+      return projectsList;
+    } else {
+      return projectsList.filter((project) => project.project_type === filter);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchProjects = async () => {
       setLoading(true);
@@ -1153,7 +1168,7 @@ export const ProjectsSection = () => {
             : [];
 
           setProjects(transformedProjects as Project[]);
-          setFilteredProjects(transformedProjects as Project[]);
+          setFilteredProjects(applyFilter(activeFilter, transformedProjects as Project[]));
           setError(null);
         }
       } catch (err: any) {
@@ -1165,22 +1180,12 @@ export const ProjectsSection = () => {
     };
 
     fetchProjects();
-  }, []);
+  }, [activeFilter, applyFilter]);
 
-  useEffect(() => {
-    if (activeFilter === "all") {
-      setFilteredProjects(projects);
-    } else {
-      const filtered = projects.filter(
-        (project) => project.project_type === activeFilter
-      );
-      setFilteredProjects(filtered);
-    }
-  }, [activeFilter, projects]);
-
-  const handleFilterChange = (filter: FilterType) => {
+  const handleFilterChange = useCallback((filter: FilterType) => {
     setActiveFilter(filter);
-  };
+    setFilteredProjects(applyFilter(filter, projects));
+  }, [applyFilter, projects]);
 
   if (loading) {
     return (
