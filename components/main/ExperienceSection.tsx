@@ -19,7 +19,6 @@ interface TimelineItemData {
     technologies: string[];
     color: 'cyan' | 'purple';
     achievement: string;
-    impact: 'High' | 'Medium' | 'Low';
     order_id: number;
 }
 
@@ -47,7 +46,6 @@ const fetchTimelineData = async (): Promise<TimelineItemData[]> => {
             duration: item.duration || '0 mos',
             color: item.color || 'cyan',
             achievement: item.achievement || 'None',
-            impact: item.impact || 'Low',
             order_id: item.order_id || 0,
         })) as TimelineItemData[]
         : [];
@@ -248,18 +246,6 @@ const TimelineItem = React.memo(({ item, isLast, index, isActive, onActivate }: 
                   >
                     {item.type}
                   </span>
-                  <div className="flex items-center gap-1">
-                    {[...Array(3)].map((_, i) => (
-                      <div
-                        key={i}
-                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                          i < (item.impact === 'High' ? 3 : item.impact === 'Medium' ? 2 : 1)
-                            ? isExperience ? 'bg-cyan-400' : 'bg-purple-400'
-                            : 'bg-white/20'
-                        }`}
-                      />
-                    ))}
-                  </div>
                 </div>
                 
                 <h3 className="text-xl font-bold text-white mb-1 leading-tight">
