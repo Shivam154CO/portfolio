@@ -65,6 +65,7 @@
     "clsx": "^2.1.0",
     "framer-motion": "^10.17.12",
     "lottie-react": "^2.4.1",
+    "lucide-react": "^0.553.0",
     "meshline": "^3.3.1",
     "next": "^14.2.33",
     "react": "^18",
