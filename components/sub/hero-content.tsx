@@ -25,6 +25,7 @@ interface StatusData {
   icon: string;
   order_index: number;
   created_at: string;
+  link_to?: string;
 }
 
 export const HeroContent = () => {
@@ -91,6 +92,34 @@ export const HeroContent = () => {
         return "Recently launched";
       default:
         return type;
+    }
+  };
+
+  const getDefaultLink = (type: string, value: string) => {
+    switch (type) {
+      case 'current_company':
+        return "#experience";
+      case 'working_on':
+        return "#about";
+      case 'recently_launched':
+        return "#projects";
+      default:
+        return "#";
+    }
+  };
+
+  const handleStatusClick = (status: StatusData) => {
+    const link = status.link_to || getDefaultLink(status.type, status.value);
+    
+    if (link.startsWith('#')) {
+      // Smooth scroll to section
+      const element = document.querySelector(link);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // External link
+      window.open(link, '_blank');
     }
   };
 
@@ -193,13 +222,19 @@ export const HeroContent = () => {
             
             <div className="space-y-3">
               {statusData.map((status) => (
-                <div key={status.id} className="flex items-center gap-3">
+                <button
+                  key={status.id}
+                  onClick={() => handleStatusClick(status)}
+                  className="w-full text-left flex items-center gap-3 p-2 rounded-lg transition-all duration-200 hover:bg-white/5 hover:scale-105 cursor-pointer group"
+                >
                   {getIconComponent(status.type)}
                   <div>
                     <p className="text-xs text-gray-400">{getLabel(status.type)}</p>
-                    <p className="text-sm text-white font-medium">{status.value}</p>
+                    <p className="text-sm text-white font-medium group-hover:text-purple-300 transition-colors">
+                      {status.value}
+                    </p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </motion.div>
