@@ -112,13 +112,11 @@ export const HeroContent = () => {
     const link = status.link_to || getDefaultLink(status.type, status.value);
     
     if (link.startsWith('#')) {
-      // Smooth scroll to section
       const element = document.querySelector(link);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // External link
       window.open(link, '_blank');
     }
   };
