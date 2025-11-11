@@ -195,7 +195,7 @@ export const HeroContent = () => {
 
         <motion.a
           variants={slideInFromLeft(1)}
-          href={heroData?.resume_link || "/resume.pdf"}
+          href={heroData?.resume_link}
           target="_blank"
           rel="noopener noreferrer"
           className="py-4 px-5 sm:px-6 bg-transparent border-[#7D43FF] border-2 text-white text-base sm:text-base font-medium rounded-full shadow-lg transition-transform hover:scale-105 max-w-[110px] sm:max-w-[180px] mx-auto md:mx-0 flex items-center justify-center"
