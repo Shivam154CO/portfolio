@@ -1,12 +1,134 @@
 "use client";
 
-import { SparklesIcon } from "@heroicons/react/24/solid";
+import { SparklesIcon, ClockIcon, BriefcaseIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { slideInFromLeft, slideInFromRight, slideInFromTop } from "@/lib/motion";
-import MyLogo from '@/public/logo.png';
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+
+interface HeroData {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  resume_link: string;
+  role: string;
+  created_at: string;
+}
+
+interface StatusData {
+  id: string;
+  type: 'current_company' | 'working_on' | 'recently_launched';
+  label: string;
+  value: string;
+  icon: string;
+  order_index: number;
+  created_at: string;
+}
 
 export const HeroContent = () => {
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
+  const [statusData, setStatusData] = useState<StatusData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchHeroData();
+  }, []);
+
+  const fetchHeroData = async () => {
+    try {
+      setLoading(true);
+      
+      const { data: heroData, error: heroError } = await supabase
+        .from('hero_content')
+        .select('*')
+        .single();
+
+      if (heroError) {
+        console.error('Error fetching hero data:', heroError);
+      } else {
+        setHeroData(heroData);
+      }
+
+      const { data: statusData, error: statusError } = await supabase
+        .from('status_updates')
+        .select('*')
+        .order('order_index', { ascending: true });
+
+      if (statusError) {
+        console.error('Error fetching status data:', statusError);
+      } else {
+        setStatusData(statusData || []);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getIconComponent = (type: string) => {
+    switch (type) {
+      case 'current_company':
+        return <BriefcaseIcon className="h-4 w-4 text-green-400 flex-shrink-0" />;
+      case 'working_on':
+        return <ClockIcon className="h-4 w-4 text-yellow-400 flex-shrink-0" />;
+      case 'recently_launched':
+        return <SparklesIcon className="h-4 w-4 text-purple-400 flex-shrink-0" />;
+      default:
+        return <SparklesIcon className="h-4 w-4 text-gray-400 flex-shrink-0" />;
+    }
+  };
+
+  const getLabel = (type: string) => {
+    switch (type) {
+      case 'current_company':
+        return "Currently at";
+      case 'working_on':
+        return "Working on";
+      case 'recently_launched':
+        return "Recently launched";
+      default:
+        return type;
+    }
+  };
+
+  const renderTitle = (title: string) => {
+    if (!title) return defaultTitle;
+    
+    if (title.includes('<span')) {
+      return (
+        <div dangerouslySetInnerHTML={{ __html: title }} />
+      );
+    }
+    
+    return title;
+  };
+
+  const defaultTitle = (
+    <>
+      Transforming{" "}
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
+        Ideas
+      </span>{" "}
+      into Innovative User{" "}
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
+        Experiences
+      </span>
+    </>
+  );
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center px-6 md:px-20 mt-16 md:mt-40 w-full z-[20] min-h-[400px]">
+        <div className="text-white text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  const hasStatusData = statusData.length > 0;
+
   return (
     <motion.div
       initial="hidden"
@@ -26,47 +148,70 @@ export const HeroContent = () => {
             className="h-6 w-6 md:h-5 md:w-5 object-contain"
           />
           <h1 className="text-[12px] md:text-[13px] text-gray-200 font-semibold">
-            Fullstack Developer
+            {heroData?.role || "Fullstack Developer"}
           </h1>        
         </motion.div>
+        
         <motion.h1
           variants={slideInFromLeft(0.5)}
           className="text-3xl sm:text-4xl md:text-6xl font-bold text-white max-w-[600px] leading-tight"
         >
-          Transforming{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
-            Ideas
-          </span>{" "}
-          into Innovative User{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
-            Experiences
-          </span>
+          {heroData?.title ? renderTitle(heroData.title) : defaultTitle}
         </motion.h1>
+        
         <motion.p
           variants={slideInFromLeft(0.8)}
           className="text-base sm:text-lg text-gray-400 my-3 sm:my-4 max-w-[500px] mx-auto md:mx-0"
         >
-          I&apos;m a Full Stack Software Engineer specializing in building modern mobile and web applications. Check out my resume.
+          {heroData?.description || "I'm a Full Stack Software Engineer specializing in building modern mobile and web applications. Check out my resume."}
         </motion.p>
+
         <motion.a
           variants={slideInFromLeft(1)}
-          href="#projects"
+          href={heroData?.resume_link || "/resume.pdf"}
+          target="_blank"
+          rel="noopener noreferrer"
           className="py-4 px-5 sm:px-6 bg-transparent border-[#7D43FF] border-2 text-white text-base sm:text-base font-medium rounded-full shadow-lg transition-transform hover:scale-105 max-w-[110px] sm:max-w-[180px] mx-auto md:mx-0 flex items-center justify-center"
         >
           Resume
         </motion.a>
       </div>
+      
       <motion.div
         variants={slideInFromRight(0.8)}
-        className="w-full flex justify-end items-center mt-8 md:mt-0"
+        className="w-full flex flex-col md:flex-row justify-end items-center gap-6 mt-8 md:mt-0"
       >
+        {hasStatusData && (
+          <motion.div
+            variants={slideInFromRight(1)}
+            className="w-full max-w-[280px] bg-gradient-to-b from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-2xl p-4 border border-[#7042f88b] shadow-2xl"
+          >
+            <h3 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
+              <SparklesIcon className="h-4 w-4 text-purple-400" />
+              Current Status
+            </h3>
+            
+            <div className="space-y-3">
+              {statusData.map((status) => (
+                <div key={status.id} className="flex items-center gap-3">
+                  {getIconComponent(status.type)}
+                  <div>
+                    <p className="text-xs text-gray-400">{getLabel(status.type)}</p>
+                    <p className="text-sm text-white font-medium">{status.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         <Image
           src="/hero-bg.svg"
           alt="work icons"
-          height={400}
-          width={400}
+          height={350}
+          width={350}
           draggable={false}
-          className="select-none drop-shadow-lg sm:h-[450px] sm:w-[450px] md:h-[500px] md:w-[500px]"
+          className="select-none drop-shadow-lg"
         />
       </motion.div>
     </motion.div>
