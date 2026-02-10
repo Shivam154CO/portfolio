@@ -1,7 +1,7 @@
 <div align="center">
 
 <h1 style="font-size:44px;">👨‍💻 Shivam Pawar</h1>
-<h3 style="margin-top:-10px;">Modern Developer Portfolio</h3>
+<h3 style="margin-top:-10px;">Developer Portfolio</h3>
 
 <p style="max-width:720px; font-size:18px;">
 A modern, scalable, and responsive portfolio website built with <b>Next.js</b> and <b>Supabase</b>, designed to showcase my projects, skills, and developer journey with a clean and professional UI.
