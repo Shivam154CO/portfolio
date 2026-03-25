@@ -27,6 +27,23 @@ export default function RootLayout({ children }: PropsWithChildren) {
           inter.className
         )}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Shivam Pawar",
+              "url": "https://shivampawar.dev",
+              "jobTitle": "Full Stack Developer",
+              "sameAs": [
+                "https://github.com/Shivam154CO",
+                "https://www.linkedin.com/in/shivampawar18/",
+                "https://www.instagram.com/konshivammm_18/"
+              ]
+            })
+          }}
+        />
         <StarsCanvas />
         <Navbar />
         {children}

@@ -74,7 +74,7 @@ const ContactLink: React.FC<ContactLinkProps> = ({ iconUrl, title, subtitle, hre
 };
 
 export default function ContactUsSection() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", website: "" }); // website is honeypot
   const [status, setStatus] = useState<"" | "loading" | "success" | "error">("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -84,6 +84,13 @@ export default function ContactUsSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Honeypot check: If 'website' value is filled, it's a bot
+    if (formData.website) {
+       console.warn("Honeypot filled. Bot detected.");
+       setStatus("success"); // Fake success to satisfy bot scripts
+       return;
+    }
 
     if (!formData.name || !formData.email || !formData.message) {
       setStatus("error");
@@ -97,7 +104,7 @@ export default function ContactUsSection() {
       const result = await submitContactForm(formData);
 
       if (result.success) {
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "", website: "" });
         setStatus("success");
       } else {
         setStatus("error");
@@ -171,6 +178,16 @@ export default function ContactUsSection() {
           </h2>
           
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Honeypot Field (Hidden from users, visible to bots) */}
+            <div className="sr-only opacity-0 absolute pointer-events-none">
+                <input 
+                    name="website" 
+                    value={formData.website} 
+                    onChange={handleChange} 
+                    tabIndex={-1} 
+                    autoComplete="off" 
+                />
+            </div>
             {status === "success" && (
               <div className="p-3 rounded-lg bg-green-500/10 text-green-300 border border-green-500/30 text-sm backdrop-blur-sm">
                 Received! Thank you for reaching out.
