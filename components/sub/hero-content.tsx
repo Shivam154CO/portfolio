@@ -1,11 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { SparklesIcon, ClockIcon, BriefcaseIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { slideInFromLeft, slideInFromRight, slideInFromTop } from "@/lib/motion";
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { getHeroData, getStatusUpdates } from "@/lib/actions";
 
 interface HeroData {
   id: string;
@@ -34,40 +34,15 @@ export const HeroContent = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchHeroData();
-  }, []);
-
-  const fetchHeroData = async () => {
-    try {
+    const fetchData = async () => {
       setLoading(true);
-      
-      const { data: heroData, error: heroError } = await supabase
-        .from('hero_content')
-        .select('*')
-        .single();
-
-      if (heroError) {
-        console.error('Error fetching hero data:', heroError);
-      } else {
-        setHeroData(heroData);
-      }
-
-      const { data: statusData, error: statusError } = await supabase
-        .from('status_updates')
-        .select('*')
-        .order('order_index', { ascending: true });
-
-      if (statusError) {
-        console.error('Error fetching status data:', statusError);
-      } else {
-        setStatusData(statusData || []);
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
+      const [hero, status] = await Promise.all([getHeroData(), getStatusUpdates()]);
+      setHeroData(hero);
+      setStatusData(status);
       setLoading(false);
-    }
-  };
+    };
+    fetchData();
+  }, []);
 
   const getIconComponent = (type: string) => {
     switch (type) {
@@ -211,10 +186,10 @@ export const HeroContent = () => {
         {hasStatusData && (
           <motion.div
             variants={slideInFromRight(1)}
-            className="w-full max-w-[260px] sm:max-w-[280px] bg-gradient-to-b from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-[#7042f88b] shadow-2xl"
+            className="w-full max-w-[300px] sm:max-w-[320px] bg-gradient-to-b from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-[#7042f88b] shadow-2xl"
           >
             <h3 className="text-white font-semibold text-xs sm:text-sm mb-2 sm:mb-3 flex items-center gap-2">
-              <SparklesIcon className="h-3 w-4 sm:h-4 sm:w-4 text-purple-400" />
+              <SparklesIcon className="h-4 w-4 text-purple-400" />
               Current Status
             </h3>
             

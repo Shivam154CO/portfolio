@@ -2,12 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = "https://zpcjcjqhhswcyaygtmxh.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwY2pjanFoaHN3Y3lheWd0bXhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAyOTM0MDQsImV4cCI6MjA3NTg2OTQwNH0.dkVfgXIyg9dJvu8-DQRK7RN7tWR4zwPLeQa5b1HrojM";
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { submitContactForm } from "@/lib/actions";
 
 const TEXT_GRADIENT_CLASS = "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400";
 const BUTTON_GRADIENT_ACTIVE = "bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 hover:scale-[1.01] hover:shadow-lg hover:shadow-cyan-500/50";
@@ -57,7 +52,7 @@ const ContactLink: React.FC<ContactLinkProps> = ({ iconUrl, title, subtitle, hre
       href={href} 
       target="_blank" 
       rel="noopener noreferrer" 
-      className="flex items-center p-3 transition-all duration-300 rounded-lg hover:bg-white/5 cursor-pointer group border border-transparent hover:border-white/10 hover:shadow-[0_0_20px_rgba(139,92,246,0.1)]"
+      className="flex items-center p-3 transition-all duration-300 rounded-lg hover:bg-white/5 cursor-pointer group border border-transparent hover:border-white/10 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]"
     >
       <div className="mr-4 flex-shrink-0">
         <FlaticonIcon 
@@ -78,9 +73,10 @@ const ContactLink: React.FC<ContactLinkProps> = ({ iconUrl, title, subtitle, hre
   );
 };
 
-export default function App() {
+export default function ContactUsSection() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"" | "loading" | "success" | "error">("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -91,24 +87,26 @@ export default function App() {
 
     if (!formData.name || !formData.email || !formData.message) {
       setStatus("error");
+      setErrorMessage("Please fill in all fields.");
       return;
     }
 
     setStatus("loading");
 
     try {
-      const { error } = await supabase.from("contact_messages").insert([formData]);
+      const result = await submitContactForm(formData);
 
-      if (error) {
-        console.error("Supabase insert error:", error);
-        setStatus("error");
-      } else {
+      if (result.success) {
         setFormData({ name: "", email: "", message: "" });
         setStatus("success");
+      } else {
+        setStatus("error");
+        setErrorMessage(result.error || "Failed to send message.");
       }
     } catch (err) {
       console.error("Unexpected error during submission:", err);
       setStatus("error");
+      setErrorMessage("An unexpected error occurred.");
     }
   };
 
@@ -175,12 +173,12 @@ export default function App() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {status === "success" && (
               <div className="p-3 rounded-lg bg-green-500/10 text-green-300 border border-green-500/30 text-sm backdrop-blur-sm">
-                Recieved! Thank you for reaching out.
+                Received! Thank you for reaching out.
               </div>
             )}
             {status === "error" && (
               <div className="p-3 rounded-lg bg-red-500/10 text-red-300 border border-red-500/30 text-sm backdrop-blur-sm">
-                Failed to send message. Please try again.
+                {errorMessage}
               </div>
             )}
             <div>
