@@ -103,102 +103,90 @@ export const CertificateCard = ({ certificate }: { certificate: Certificate }) =
 
     return (
         <div
-            className="w-full max-w-2xl mx-auto bg-gradient-to-br from-white/5 to-white/10 rounded-2xl backdrop-blur-xl border border-white/10 shadow-xl overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]"
+            className="w-full bg-gradient-to-br from-white/5 to-white/10 rounded-2xl backdrop-blur-xl border border-white/10 shadow-xl overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] flex flex-col h-full"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <div className="flex flex-col lg:flex-row gap-4 p-5">
-                <div className="lg:w-2/5 space-y-4">
-                    <div className="relative group">
-                        <div className="relative rounded-xl overflow-hidden border-2 border-white/20 shadow-lg">
-                            <Image
-                                src={certificate.image_url} 
-                                alt={`${certificate.title} ${certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}`}
-                                width={300}
-                                height={160}
-                                className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105"
-                            />
+            <div className="relative group w-full aspect-[16/10] overflow-hidden">
+                <div className="absolute inset-0 border-b border-white/10">
+                    <Image
+                        src={certificate.image_url} 
+                        alt={`${certificate.title} ${certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}`}
+                        fill
+                        className="object-contain transition-transform duration-500 group-hover:scale-105"
+                    />
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-3">
-                                <a href={certificate.verification_url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm font-medium hover:bg-white/30 transition-all duration-300">
-                                    View {certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}
-                                </a>
-                            </div>
-                        </div>
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <a href={certificate.verification_url} target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30">
+                            Verify {certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}
+                        </a>
                     </div>
+                </div>
+            </div>
 
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-white/5 rounded-lg p-3 border border-white/10 text-center">
-                            <ClockIcon className="w-4 h-4 text-blue-400 mx-auto mb-1" />
-                            <div className="text-sm font-semibold text-white">{certificate.duration}</div>
-                            <div className="text-xs text-gray-400">Duration</div>
-                        </div>
-                        <div className="bg-white/5 rounded-lg p-3 border border-white/10 text-center">
-                            <AwardIcon className="w-4 h-4 text-green-400 mx-auto mb-1" />
-                            <div className="text-sm font-semibold text-white">{certificate.level}</div>
-                            <div className="text-xs text-gray-400">Level</div>
-                        </div>
+            <div className="p-6 flex flex-col flex-1 gap-4">
+                <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1">
+                        <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 line-clamp-2">
+                            {certificate.title}
+                        </h2>
+                        <p className="text-gray-400 text-sm mt-1">Issued by {certificate.issuer}</p>
                     </div>
-
-                    <div className={`px-3 py-2 rounded-lg text-center border ${getCategoryColor(certificate.category)}`}>
-                        <span className="text-sm font-medium">{certificate.category}</span>
+                    <div className={`shrink-0 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                        certificate.type === 'certificate' 
+                            ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' 
+                            : 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
+                    }`}>
+                        {certificate.type}
                     </div>
                 </div>
 
-                <div className="lg:w-3/5 space-y-4">
-                    <div className="flex justify-between items-start">
+                <p className="text-gray-300 text-sm leading-relaxed line-clamp-3">
+                    {certificate.description}
+                </p>
+
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-white/5 rounded-xl p-3 border border-white/10 flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-blue-500/10">
+                            <ClockIcon className="w-4 h-4 text-blue-400" />
+                        </div>
                         <div>
-                            <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-                                {certificate.title}
-                            </h2>
-                            <p className="text-gray-400 text-sm mt-1">Issued by {certificate.issuer}</p>
-                        </div>
-                        <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            certificate.type === 'certificate' 
-                                ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' 
-                                : 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
-                        }`}>
-                            {certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}
+                            <div className="text-xs text-gray-400">Duration</div>
+                            <div className="text-sm font-bold text-white">{certificate.duration}</div>
                         </div>
                     </div>
-
-                    <p className="text-gray-300 text-sm leading-relaxed">
-                        {certificate.description}
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div className="space-y-2">
-                            <div className="flex items-center space-x-2 text-gray-400">
-                                <CalendarIcon className="w-4 h-4" />
-                                <span>Issued: {certificate.issue_date}</span>
-                            </div>
+                    <div className="bg-white/5 rounded-xl p-3 border border-white/10 flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-green-500/10">
+                            <AwardIcon className="w-4 h-4 text-green-400" />
+                        </div>
+                        <div>
+                            <div className="text-xs text-gray-400">Level</div>
+                            <div className="text-sm font-bold text-white">{certificate.level}</div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="pt-2">
-                        <h4 className="text-white font-semibold text-sm mb-2">Skills Acquired:</h4>
-                        <div className="flex flex-wrap gap-2">
-                            {Array.isArray(certificate.skills) && certificate.skills.map((skill, index) => (
-                                <span
-                                    key={index}
-                                    className="px-2 py-1 bg-white/5 rounded text-xs text-gray-300 border border-white/10 hover:bg-white/10 transition-all duration-300"
-                                >
-                                    {skill}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex space-x-2 pt-3">
-                        <a
-                            href={certificate.verification_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg text-white text-sm font-medium hover:shadow-lg transition-all duration-300"
+                <div className="flex flex-wrap gap-2 mt-auto">
+                    {Array.isArray(certificate.skills) && certificate.skills.slice(0, 4).map((skill, index) => (
+                        <span
+                            key={index}
+                            className="px-2 py-1 bg-white/5 rounded-md text-[10px] text-gray-300 border border-white/10"
                         >
-                            <ExternalLinkIcon className="w-4 h-4" />
-                            <span>Verify</span>
-                        </a>
+                            {skill}
+                        </span>
+                    ))}
+                    {certificate.skills?.length > 4 && (
+                        <span className="px-2 py-1 text-[10px] text-gray-500">+{certificate.skills.length - 4} more</span>
+                    )}
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <CalendarIcon className="w-4 h-4" />
+                        <span>{certificate.issue_date}</span>
+                    </div>
+                    <div className={`px-2 py-1 rounded-md text-[10px] font-medium border ${getCategoryColor(certificate.category)}`}>
+                        {certificate.category}
                     </div>
                 </div>
             </div>
@@ -220,7 +208,7 @@ export const CertificatesSection = () => {
                 let { data, error } = await supabase
                     .from('achievements_certificates')
                     .select('*')
-                    .order('id', { ascending: true });
+                    .order('id', { ascending: false });
 
                 if (error) {
                     console.error('Supabase fetch error:', error);
@@ -292,7 +280,7 @@ export const CertificatesSection = () => {
             id="certificates"
             className="flex flex-col items-center justify-center py-16 min-h-screen font-sans"
         >
-            <div className="container mx-auto px-4 max-w-3xl">
+            <div className="container mx-auto px-4 max-w-7xl">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500 mb-3">
                         Certifications & Achievements
@@ -343,7 +331,7 @@ export const CertificatesSection = () => {
                     </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {filteredCertificates.length > 0 ? (
                         filteredCertificates.map((certificate) => (
                             <CertificateCard

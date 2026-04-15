@@ -64,7 +64,7 @@ export async function getSkills() {
 
 export async function getProjects() {
     try {
-        const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: true });
+        const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: false });
         if (error) throw error;
         return data;
     } catch (err) {
@@ -75,7 +75,7 @@ export async function getProjects() {
 
 export async function getTimelineData() {
     try {
-        const { data, error } = await supabase.from('timeline_items').select('*').order('order_id', { ascending: true });
+        const { data, error } = await supabase.from('timeline_items').select('*').order('order_id', { ascending: false });
         if (error) throw error;
         return data;
     } catch (err) {
