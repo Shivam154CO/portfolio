@@ -7,27 +7,9 @@ import Image from "next/image";
 import { slideInFromLeft, slideInFromRight, slideInFromTop } from "@/lib/motion";
 import { getHeroData, getStatusUpdates } from "@/lib/actions";
 import { ResumeModal } from "@/components/main/resume-modal";
+import Magnetic from "./magnetic";
 
-interface HeroData {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  resume_link: string;
-  role: string;
-  created_at: string;
-}
-
-interface StatusData {
-  id: string;
-  type: 'current_company' | 'working_on' | 'recently_launched';
-  label: string;
-  value: string;
-  icon: string;
-  order_index: number;
-  created_at: string;
-  link_to?: string;
-}
+import { HeroData, StatusData } from "@/types";
 
 export const HeroContent = () => {
   const [heroData, setHeroData] = useState<HeroData | null>(null);
@@ -191,13 +173,15 @@ export const HeroContent = () => {
           </motion.div>
         )}
 
-        <motion.button
-          variants={slideInFromLeft(1)}
-          onClick={() => setIsResumeOpen(true)}
-          className="py-3 sm:py-4 px-4 sm:px-5 md:px-6 bg-transparent border-[#7D43FF] border-2 text-white text-sm sm:text-base font-medium rounded-full shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#7D43FF]/10 active:scale-95 max-w-[100px] sm:max-w-[110px] md:max-w-[180px] mx-auto lg:mx-0 flex items-center justify-center cursor-pointer"
-        >
-          View Resume
-        </motion.button>
+        <Magnetic>
+          <motion.button
+            variants={slideInFromLeft(1)}
+            onClick={() => setIsResumeOpen(true)}
+            className="py-3 sm:py-4 px-4 sm:px-5 md:px-6 bg-transparent border-[#7D43FF] border-2 text-white text-sm sm:text-base font-medium rounded-full shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#7D43FF]/10 active:scale-95 max-w-[100px] sm:max-w-[110px] md:max-w-[180px] mx-auto lg:mx-0 flex items-center justify-center cursor-pointer"
+          >
+            View Resume
+          </motion.button>
+        </Magnetic>
       </div>
 
       <motion.div

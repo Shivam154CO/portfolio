@@ -146,15 +146,8 @@ const categorizeSkill = (skillName: string): string => {
   return 'Programming Languages';
 };
 
-const CATEGORIES = ["All Skills", "Programming Languages", "Frontend", "Backend", "Databases & Cloud", "Tools & DevOps"];
-
-type Skill = {
-  skill_name: string;
-  image?: string | null;
-  width?: number | null;
-  height?: number | null;
-  category?: string | null;
-};
+import { Skill, SkillCategory } from "@/types";
+const CATEGORIES: SkillCategory[] = ["All Skills", "Programming Languages", "Frontend", "Backend", "Databases & Cloud", "Tools & DevOps"];
 
 export const Skills = () => {
   const [skills, setSkills] = useState<Skill[]>([]);

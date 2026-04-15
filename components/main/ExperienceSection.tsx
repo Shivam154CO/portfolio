@@ -3,20 +3,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
 import { getTimelineData } from "@/lib/actions";
 
-interface TimelineItemData {
-    id: number;
-    type: 'Experience' | 'Education';
-    title: string;
-    institution: string;
-    dateRange: string;
-    location: string;
-    duration: string;
-    description: string[]; 
-    technologies: string[];
-    color: 'cyan' | 'purple';
-    achievement: string;
-    order_id: number;
-}
+import { TimelineItem as TimelineItemData } from "@/types";
 
 const BriefcaseIcon = memo((props: any) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

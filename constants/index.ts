@@ -58,7 +58,6 @@ export const FOOTER_DATA = [
 export const NAV_LINKS = [
   { title: "Home", link: "/" },
   { title: "Projects", link: "/projects" },
-  { title: "Blog", link: "/blog" },
   { title: "About", link: "/about" },
   { title: "Experience", link: "/experience" },
   { title: "Certificates", link: "/certificates" },

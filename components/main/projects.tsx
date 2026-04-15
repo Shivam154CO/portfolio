@@ -7,21 +7,7 @@ import { ProjectCardContent } from "@/components/sub/project-card-content";
 import { revealVariants } from "@/lib/motion";
 import { ProjectSkeleton } from "@/components/sub/skeleton";
 
-type Project = {
-    id: number;
-    title: string;
-    description: string;
-    image?: string;
-    images?: string[];
-    secondary_images?: string[];
-    github_link?: string;
-    live_link?: string;
-    tech_stack_names?: string[];
-    features?: string[];
-    project_type: "web" | "mobile" | "desktop";
-};
-
-type FilterType = "all" | "mobile" | "web" | "desktop";
+import { Project, FilterType } from "@/types";
 
 export const ProjectsSection = () => {
     const [projects, setProjects] = useState<Project[]>([]);

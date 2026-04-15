@@ -11,6 +11,8 @@ const StarsCanvas = dynamic(() => import("@/components/main/star-background").th
 import { ScrollToTop } from "@/components/sub/scroll-to-top";
 import { siteConfig } from "@/config";
 import { cn } from "@/lib/utils";
+import { SmoothScroll } from "@/components/main/smooth-scroll";
+import { CommandPalette } from "@/components/main/command-palette";
 
 import "./globals.css";
 
@@ -76,10 +78,13 @@ export default function RootLayout({ children }: PropsWithChildren) {
             })
           }}
         />
+        <CommandPalette />
         <ScrollToTop />
         <StarsCanvas />
         <Navbar />
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
         <Footer />
       </body>
     </html>

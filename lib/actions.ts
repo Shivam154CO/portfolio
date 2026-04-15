@@ -1,13 +1,14 @@
 "use server";
 
 import { createClient } from "@supabase/supabase-js";
+import { ContactFormData, HeroData, StatusData, Skill, Project, TimelineItem } from "@/types";
 
 // Initialize the private client here to have better access control
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function submitContactForm(formData: { name: string; email: string; message: string }) {
+export async function submitContactForm(formData: ContactFormData) {
   // Simple validation
   if (!formData.name || !formData.email || !formData.message) {
       return { success: false, error: "All fields are required" };
@@ -29,7 +30,7 @@ export async function submitContactForm(formData: { name: string; email: string;
   }
 }
 
-export async function getHeroData() {
+export async function getHeroData(): Promise<HeroData | null> {
   try {
     const { data, error } = await supabase.from('hero_content').select('*').single();
     if (error) throw error;
@@ -40,7 +41,7 @@ export async function getHeroData() {
   }
 }
 
-export async function getStatusUpdates() {
+export async function getStatusUpdates(): Promise<StatusData[]> {
   try {
     const { data, error } = await supabase.from('status_updates').select('*').order('order_index', { ascending: true });
     if (error) throw error;
@@ -51,7 +52,7 @@ export async function getStatusUpdates() {
   }
 }
 
-export async function getSkills() {
+export async function getSkills(): Promise<Skill[]> {
     try {
         const { data, error } = await supabase.from('skills').select('*');
         if (error) throw error;
@@ -62,7 +63,7 @@ export async function getSkills() {
     }
 }
 
-export async function getProjects() {
+export async function getProjects(): Promise<Project[]> {
     try {
         const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: false });
         if (error) throw error;
@@ -73,7 +74,7 @@ export async function getProjects() {
     }
 }
 
-export async function getTimelineData() {
+export async function getTimelineData(): Promise<TimelineItem[]> {
     try {
         const { data, error } = await supabase.from('timeline_items').select('*').order('order_id', { ascending: false });
         if (error) throw error;

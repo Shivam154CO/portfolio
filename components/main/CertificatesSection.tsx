@@ -58,21 +58,7 @@ const TrophyIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVG
     </svg>
 );
 
-type Certificate = {
-    id: string | number;
-    title: string;
-    issuer: string;
-    image_url: string;
-    verification_url: string;
-    duration: string;
-    level: string;
-    category: string;
-    description: string;
-    issue_date: string;
-    credential_id: string;
-    skills: string[];
-    type: 'certificate' | 'achievement';
-};
+import { Certificate } from "@/types";
 
 export const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
     const [isHovered, setIsHovered] = useState(false);
