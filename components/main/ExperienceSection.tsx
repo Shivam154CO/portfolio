@@ -117,17 +117,15 @@ const TimelineItem = memo(({ item, isLast, index, isActive, onActivate }: { item
   return (
     <div 
       ref={cardRef}
-      className={`relative flex items-start gap-6 group cursor-pointer transition-all duration-500 ${
-        isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-70'
-      }`}
+      className="relative flex items-start gap-6 group cursor-pointer transition-all duration-500 scale-100 opacity-100"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => setIsExpanded(p => !p)}
+      onClick={() => isExperience && setIsExpanded(p => !p)}
     >
       <div className="flex flex-col items-center relative z-20 pt-1">
         <div className="relative">
-          <div className={`absolute inset-0 rounded-full transition-all duration-1000 ${isActive ? 'animate-ping' : ''}`}
-            style={{ background: isExperience ? 'rgba(6, 182, 212, 0.3)' : 'rgba(139, 92, 246, 0.3)', animationDuration: '3s' }}
+          <div className="absolute inset-0 rounded-full transition-all duration-1000"
+            style={{ background: isExperience ? 'rgba(6, 182, 212, 0.3)' : 'rgba(139, 92, 246, 0.3)' }}
           />
           <div className={`relative w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} shadow-lg backdrop-blur-xl border border-white/20 transition-all duration-300 transform flex items-center justify-center ${isHovered ? 'scale-110 rotate-6' : 'scale-100 rotate-0'} ${isActive ? 'ring-2 ring-white/30' : ''}`}>
             {isExperience ? <BriefcaseIcon className="w-4 h-4 text-white" /> : <GraduationCapIcon className="w-4 h-4 text-white" />}
@@ -148,9 +146,6 @@ const TimelineItem = memo(({ item, isLast, index, isActive, onActivate }: { item
                 <h3 className="text-xl font-bold text-white mt-2 leading-tight">{item.title}</h3>
                 <p className={`text-lg font-semibold ${isExperience ? 'text-cyan-300' : 'text-purple-300'}`}>{item.institution}</p>
               </div>
-              <span className="px-2 py-1 rounded-lg bg-gradient-to-r from-yellow-500/20 to-amber-500/20 text-yellow-300 text-xs font-semibold border border-yellow-500/30 self-start">
-                {item.achievement}
-              </span>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4 text-sm text-gray-300">
               <div className="flex items-center gap-2 font-medium">
@@ -161,21 +156,25 @@ const TimelineItem = memo(({ item, isLast, index, isActive, onActivate }: { item
                 <MapPinIcon className="w-4 h-4" /> <span>{item.location}</span>
               </div>
             </div>
-            <div className={`transition-all duration-500 overflow-hidden ${isExpanded ? 'max-h-80' : 'max-h-24'}`}>
-              <ul className="space-y-2">
-                {item.description.map((point, i) => (
-                  <li key={i} className="flex items-start gap-2 text-gray-300 text-sm leading-relaxed">
-                    <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${isExperience ? 'bg-cyan-400' : 'bg-purple-400'}`} />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex justify-center mt-4">
-               <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors">
-                  {isExpanded ? 'Show less' : 'Show more'} <ChevronDownIcon className={`w-3 h-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-               </button>
-            </div>
+            {isExperience && (
+              <>
+                <div className={`transition-all duration-500 overflow-hidden ${isExpanded ? 'max-h-80' : 'max-h-24'}`}>
+                  <ul className="space-y-2">
+                    {item.description.map((point, i) => (
+                      <li key={i} className="flex items-start gap-2 text-gray-300 text-sm leading-relaxed">
+                        <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${isExperience ? 'bg-cyan-400' : 'bg-purple-400'}`} />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex justify-center mt-4">
+                   <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors">
+                      {isExpanded ? 'Show less' : 'Show more'} <ChevronDownIcon className={`w-3 h-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                   </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

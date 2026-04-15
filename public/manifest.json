@@ -1,0 +1,21 @@
+{
+  "name": "Shivam Pawar | Portfolio",
+  "short_name": "Shivam",
+  "description": "Full Stack Developer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030014",
+  "theme_color": "#030014",
+  "icons": [
+    {
+      "src": "/coding.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/coding.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

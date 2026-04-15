@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
 import { getProjects } from "@/lib/actions";
 import { ProjectCardContent } from "@/components/sub/project-card-content";
+import { revealVariants } from "@/lib/motion";
+import { ProjectSkeleton } from "@/components/sub/skeleton";
 
 type Project = {
     id: number;
@@ -40,11 +43,18 @@ export const ProjectsSection = () => {
         [projects, activeFilter]
     );
 
+
+
     if (loading) {
         return (
-            <section id="projects" className="flex flex-col items-center justify-center py-20 min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
-                <p className="mt-4 text-gray-400">Loading projects...</p>
+            <section id="projects" className="py-20 px-4 flex flex-col items-center">
+                <div className="container mx-auto max-w-6xl">
+                    <div className="grid gap-12 max-w-5xl mx-auto">
+                        {[...Array(3)].map((_, i) => (
+                            <ProjectSkeleton key={i} />
+                        ))}
+                    </div>
+                </div>
             </section>
         );
     }
@@ -79,9 +89,18 @@ export const ProjectsSection = () => {
                     </div>
                 </div>
 
+
                 <div className="grid gap-12 max-w-5xl mx-auto">
-                    {filteredProjects.map((project) => (
-                        <ProjectCardContent key={project.id} project={project} />
+                    {filteredProjects.map((project, index) => (
+                        <motion.div
+                            key={project.id}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={revealVariants}
+                        >
+                            <ProjectCardContent project={project} />
+                        </motion.div>
                     ))}
                     {filteredProjects.length === 0 && (
                         <p className="text-center text-gray-500 py-20 italic">No projects found in this category.</p>

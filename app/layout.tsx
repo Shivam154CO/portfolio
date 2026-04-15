@@ -2,9 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import type { PropsWithChildren } from "react";
 
+import dynamic from "next/dynamic";
 import { Footer } from "@/components/main/footer";
 import { Navbar } from "@/components/main/navbar";
-import { StarsCanvas } from "@/components/main/star-background";
+const StarsCanvas = dynamic(() => import("@/components/main/star-background").then((mod) => mod.StarsCanvas), {
+  ssr: false,
+});
+import { ScrollToTop } from "@/components/sub/scroll-to-top";
 import { siteConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +20,35 @@ export const viewport: Viewport = {
   themeColor: "#030014",
 };
 
-export const metadata: Metadata = siteConfig;
+export const metadata: Metadata = {
+  ...siteConfig,
+  metadataBase: new URL("https://shivampawar.dev"),
+  alternates: {
+    canonical: "/",
+  },
+  manifest: "/manifest.json",
+  openGraph: {
+    title: "Shivam Pawar | Full Stack Developer",
+    description: "Welcome to my portfolio site. Exploring the boundaries of modern web development.",
+    url: "https://shivampawar.dev",
+    siteName: "Shivam Pawar Portfolio",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shivam Pawar | Full Stack Developer",
+    description: "Welcome to my portfolio site.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
@@ -44,6 +76,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             })
           }}
         />
+        <ScrollToTop />
         <StarsCanvas />
         <Navbar />
         {children}

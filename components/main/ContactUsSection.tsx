@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import confetti from "canvas-confetti";
 import { submitContactForm } from "@/lib/actions";
 
 const TEXT_GRADIENT_CLASS = "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400";
@@ -106,6 +107,12 @@ export default function ContactUsSection() {
       if (result.success) {
         setFormData({ name: "", email: "", message: "", website: "" });
         setStatus("success");
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#a855f7', '#06b6d4', '#3b82f6']
+        });
       } else {
         setStatus("error");
         setErrorMessage(result.error || "Failed to send message.");

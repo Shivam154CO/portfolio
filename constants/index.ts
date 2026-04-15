@@ -1,5 +1,3 @@
-import { link } from "fs";
-import { title } from "process";
 import { FaYoutube, FaFacebook } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import {
@@ -58,7 +56,9 @@ export const FOOTER_DATA = [
 ] as const;
 
 export const NAV_LINKS = [
-  { title: "Home", link: "/" },{ title: "Projects", link: "/projects" },
+  { title: "Home", link: "/" },
+  { title: "Projects", link: "/projects" },
+  { title: "Blog", link: "/blog" },
   { title: "About", link: "/about" },
   { title: "Experience", link: "/experience" },
   { title: "Certificates", link: "/certificates" },

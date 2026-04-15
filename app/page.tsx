@@ -2,7 +2,7 @@ import Head from "next/head";
 import CertificatesSection from "@/components/main/CertificatesSection";
 import ContactUsSection from "@/components/main/ContactUsSection";
 import { Hero } from "@/components/main/hero";
-// import { AboutMeSection } from "@/components/main/AboutMeSection";
+import { TechMarquee } from "@/components/main/tech-marquee";
 import { HighlightsSection } from "@/components/main/HighlightsSection";
 import { Skills } from "@/components/main/skills";
 import { ExperienceSection } from "@/components/main/ExperienceSection";
@@ -10,8 +10,9 @@ import { ProjectsSection } from "@/components/main/projects";
 
 
 export const metadata = {
-  title: "Shivam Pawar",
-  description: "Welcome to my portfolio site.",
+  title: "Shivam Pawar | Full Stack Developer Portfolio",
+  description: "Explore the portfolio of Shivam Pawar, a Full Stack Developer specializing in building modern web and mobile applications with React, Next.js, and Supabase.",
+  keywords: ["Shivam Pawar", "Full Stack Developer", "Software Engineer", "React Developer", "Next.js Portfolio"],
   icons: {
     icon: "/coding.png",
   },
@@ -24,6 +25,8 @@ export default function Home() {
         <section id="home">
           <Hero />
         </section>
+
+        <TechMarquee />
 
         <section id="highlights">
           <HighlightsSection />

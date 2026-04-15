@@ -3,8 +3,8 @@ import { supabase } from "@/lib/supabaseClient";
 import { CertificatesSection } from "@/components/main/CertificatesSection";
 
 export const metadata = {
-  title: "Shivam Pawar",
-  description: "Welcome to my portfolio site.",
+  title: "Professional Certifications | Shivam Pawar",
+  description: "A collection of validated certifications and achievements in Web Development, Mobile Apps, and Cloud Technologies earned by Shivam Pawar.",
   icons: {
     icon: "/coding.png",
   },

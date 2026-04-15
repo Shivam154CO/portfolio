@@ -125,3 +125,22 @@ body {
   color: white;
   overflow-x: hidden;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030014;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #7042f8, #00c7ff);
+  border-radius: 10px;
+  border: 2px solid #030014;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #8b5cf6, #22d3ee);
+}

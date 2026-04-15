@@ -77,7 +77,7 @@ export const ProjectCardContent = memo(({ project }: { project: any }) => {
                             <MobileFrame>
                                 {finalImages.map((img: string, idx: number) => (
                                     <div key={img} className={`absolute inset-0 transition-opacity duration-1000 ${idx === currentImageIndex ? "opacity-100" : "opacity-0"}`}>
-                                        <Image src={img} alt="project-mobile" fill className="object-cover" sizes="300px" quality={100} />
+                                        <Image src={img} alt="project-mobile" fill className="object-cover" quality={100} unoptimized />
                                     </div>
                                 ))}
                             </MobileFrame>
@@ -85,7 +85,7 @@ export const ProjectCardContent = memo(({ project }: { project: any }) => {
                             <DesktopFrame>
                                 {finalImages.map((img: string, idx: number) => (
                                     <div key={img} className={`absolute inset-0 transition-opacity duration-1000 ${idx === currentImageIndex ? "opacity-100" : "opacity-0"}`}>
-                                        <Image src={img} alt="project-desktop" fill className="object-cover" sizes="800px" quality={100} />
+                                        <Image src={img} alt="project-desktop" fill className="object-cover" quality={100} unoptimized />
                                     </div>
                                 ))}
                             </DesktopFrame>
@@ -93,7 +93,7 @@ export const ProjectCardContent = memo(({ project }: { project: any }) => {
                             <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl border border-white/10">
                                 {finalImages.map((img: string, idx: number) => (
                                     <div key={idx} className={`absolute inset-0 transition-opacity duration-1000 ${idx === currentImageIndex ? "opacity-100" : "opacity-0"}`}>
-                                        <Image src={img} alt="project" fill className="object-contain" sizes="800px" quality={100} />
+                                        <Image src={img} alt="project" fill className="object-contain" quality={100} unoptimized />
                                     </div>
                                 ))}
                             </div>

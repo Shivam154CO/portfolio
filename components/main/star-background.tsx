@@ -9,7 +9,7 @@ import type { Points as PointsType } from "three";
 export const StarBackground = memo((props: PointsProps) => {
   const ref = useRef<PointsType | null>(null);
   const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(5000), { radius: 1.2 }) as Float32Array
+    random.inSphere(new Float32Array(3000), { radius: 1.2 }) as Float32Array
   );
 
   useFrame((_state, delta) => {
@@ -44,7 +44,11 @@ StarBackground.displayName = "StarBackground";
 
 export const StarsCanvas = () => (
   <div className="w-full h-auto fixed inset-0 -z-10">
-    <Canvas camera={{ position: [0, 0, 1] }}>
+    <Canvas 
+      camera={{ position: [0, 0, 1] }}
+      dpr={[1, 1.2]}
+      gl={{ antialias: false, powerPreference: "high-performance" }}
+    >
       <Suspense fallback={null}>
         <StarBackground />
       </Suspense>

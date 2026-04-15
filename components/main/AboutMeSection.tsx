@@ -45,6 +45,8 @@ const ProfileVisual = ({ profileData }: { profileData: any }) => (
           height={256}
           className="w-full h-full object-cover"
           priority
+          quality={100}
+          unoptimized
         />
       </div>
     </div>

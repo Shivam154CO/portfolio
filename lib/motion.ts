@@ -37,3 +37,27 @@ export const slideInFromTop = {
     },
   },
 };
+
+export const fadeIn = (delay: number) => ({
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delay: delay,
+      duration: 0.5,
+    },
+  },
+});
+
+export const revealVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+

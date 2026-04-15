@@ -101,7 +101,7 @@ const SkillDataProvider = memo(({ src, name, width, height, index, category }: S
               height={32}
               className="w-8 h-8 object-contain"
               onError={handleImageError}
-              unoptimized={false} // Enable optimization
+              unoptimized={true}
             />
           ) : (
             <>

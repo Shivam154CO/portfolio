@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { createClient } from "@supabase/supabase-js";
+import { CertificateSkeleton } from "@/components/sub/skeleton";
 
 const supabaseUrl = "https://zpcjcjqhhswcyaygtmxh.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwY2pjanFoaHN3Y3lheWd0bXhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAyOTM0MDQsImV4cCI6MjA3NTg2OTQwNH0.dkVfgXIyg9dJvu8-DQRK7RN7tWR4zwPLeQa5b1HrojM";
@@ -114,6 +115,8 @@ export const CertificateCard = ({ certificate }: { certificate: Certificate }) =
                         alt={`${certificate.title} ${certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}`}
                         fill
                         className="object-contain transition-transform duration-500 group-hover:scale-105"
+                        quality={100}
+                        unoptimized
                     />
 
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -257,9 +260,14 @@ export const CertificatesSection = () => {
 
     if (loading) {
         return (
-            <section id="certificates" className="flex flex-col items-center justify-center py-16 min-h-screen font-sans text-white">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500"></div>
-                <p className="mt-4 text-gray-400">Loading certifications...</p>
+            <section id="certificates" className="flex flex-col items-center justify-center py-16 min-h-screen">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {[...Array(4)].map((_, i) => (
+                            <CertificateSkeleton key={i} />
+                        ))}
+                    </div>
+                </div>
             </section>
         );
     }

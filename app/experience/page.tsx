@@ -3,8 +3,8 @@ import { supabase } from "@/lib/supabaseClient";
 import { ExperienceSection } from "@/components/main/ExperienceSection";
 
 export const metadata = {
-  title: "Shivam Pawar",
-  description: "Welcome to my portfolio site.",
+  title: "Professional Experience | Shivam Pawar - Journey",
+  description: "A detailed timeline of Shivam Pawar's professional career, internships, and educational background in Full Stack Software Engineering.",
   icons: {
     icon: "/coding.png",
   },
