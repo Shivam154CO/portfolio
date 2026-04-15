@@ -24,7 +24,7 @@ export const ProjectsSection = () => {
         fetchProjectsData();
     }, []);
 
-    const filteredProjects = useMemo(() => 
+    const filteredProjects = useMemo(() =>
         projects.filter(p => activeFilter === 'all' || p.project_type === activeFilter),
         [projects, activeFilter]
     );
@@ -63,11 +63,10 @@ export const ProjectsSection = () => {
                             <button
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
-                                className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-all duration-300 ${
-                                    activeFilter === filter
+                                className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-all duration-300 ${activeFilter === filter
                                         ? "bg-gradient-to-r from-purple-500 to-cyan-500 text-white shadow-lg"
                                         : "text-gray-400 hover:text-white"
-                                }`}
+                                    }`}
                             >
                                 {filter}
                             </button>
