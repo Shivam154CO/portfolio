@@ -4,28 +4,25 @@ import Link from "next/link";
 import { FOOTER_DATA } from "@/constants";
 import { useEffect, useState } from "react";
 import { Eye, Heart, Share2 } from "lucide-react";
+import { getVisitorCount, recordVisit } from "@/lib/actions";
 
 export const Footer = () => {
   const [visitorCount, setVisitorCount] = useState(0);
 
   useEffect(() => {
-    const hasVisited = sessionStorage.getItem('hasVisited');
-    
-    if (!hasVisited) {
-      const count = localStorage.getItem('visitorCount');
-      let newCount = 1;
+    const handleVisit = async () => {
+      const hasVisited = sessionStorage.getItem('hasVisited');
       
-      if (count) {
-        newCount = parseInt(count) + 1;
+      if (!hasVisited) {
+        await recordVisit();
+        sessionStorage.setItem('hasVisited', 'true');
       }
       
-      localStorage.setItem('visitorCount', newCount.toString());
-      sessionStorage.setItem('hasVisited', 'true');
-      setVisitorCount(newCount);
-    } else {
-      const count = localStorage.getItem('visitorCount');
-      setVisitorCount(count ? parseInt(count) : 0);
-    }
+      const count = await getVisitorCount();
+      setVisitorCount(count);
+    };
+
+    handleVisit();
   }, []);
 
   return (

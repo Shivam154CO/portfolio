@@ -83,3 +83,31 @@ export async function getTimelineData() {
         return [];
     }
 }
+
+export async function getVisitorCount() {
+    try {
+        const { count, error } = await supabase
+            .from('visitor_logs')
+            .select('*', { count: 'exact', head: true });
+        
+        if (error) throw error;
+        return count || 0;
+    } catch (err) {
+        console.error("Fetch visitor count error:", err);
+        return 0;
+    }
+}
+
+export async function recordVisit() {
+    try {
+        const { error } = await supabase
+            .from('visitor_logs')
+            .insert([{}]);
+        
+        if (error) throw error;
+        return true;
+    } catch (err) {
+        console.error("Record visit error:", err);
+        return false;
+    }
+}
