@@ -96,14 +96,14 @@ export const CertificateCard = ({ certificate }: { certificate: Certificate }) =
         >
             <div className="relative group w-full aspect-[16/10] overflow-hidden">
                 <div className="absolute inset-0 border-b border-white/10">
-                    <Image
-                        src={certificate.image_url} 
-                        alt={`${certificate.title} ${certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}`}
-                        fill
-                        className="object-contain transition-transform duration-500 group-hover:scale-105"
-                        quality={100}
-                        unoptimized
-                    />
+                        <Image
+                            src={certificate.image_url} 
+                            alt={`${certificate.title} ${certificate.type === 'certificate' ? 'Certificate' : 'Achievement'}`}
+                            fill
+                            className="object-contain transition-transform duration-500 group-hover:scale-105"
+                            quality={80}
+                            loading="lazy"
+                        />
 
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <a href={certificate.verification_url} target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30">

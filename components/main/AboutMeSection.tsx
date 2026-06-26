@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import { slideInFromLeft, slideInFromRight, slideInFromTop } from "@/lib/motion";
-import { StarsCanvas } from "@/components/main/star-background";
 
 const fetchProfileInfo = async () => {
   try {
@@ -45,8 +44,6 @@ const ProfileVisual = ({ profileData }: { profileData: any }) => (
           height={256}
           className="w-full h-full object-cover"
           priority
-          quality={100}
-          unoptimized
         />
       </div>
     </div>
@@ -167,8 +164,6 @@ export const AboutMeSection = () => {
 
   return (
     <>
-      <StarsCanvas />
-      
       <section id="about" className="relative flex flex-col items-center justify-center py-10 font-sans w-full z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
           <motion.div

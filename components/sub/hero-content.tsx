@@ -132,6 +132,7 @@ export const HeroContent = () => {
             width={24}
             height={24}
             className="h-5 w-5 sm:h-6 sm:w-6 object-contain"
+            priority
           />
           <h1 className="text-[11px] sm:text-[12px] md:text-[13px] text-gray-200 font-semibold">
             {heroData?.role || "Fullstack Developer"}
@@ -189,6 +190,7 @@ export const HeroContent = () => {
           width={300}
           draggable={false}
           className="select-none drop-shadow-lg w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px]"
+          priority
         />
       </motion.div>
 
