@@ -31,7 +31,7 @@ export default function Error({
         </motion.div>
         
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
+          <h1 className="text-4xl md:text-5xl font-black text-white">
             System Failure
           </h1>
           <p className="text-gray-400 max-w-md mx-auto">

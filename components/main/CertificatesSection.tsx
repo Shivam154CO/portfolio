@@ -116,7 +116,7 @@ export const CertificateCard = ({ certificate }: { certificate: Certificate }) =
             <div className="p-6 flex flex-col flex-1 gap-4">
                 <div className="flex justify-between items-start gap-4">
                     <div className="flex-1">
-                        <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 line-clamp-2">
+                        <h2 className="text-xl font-bold text-white line-clamp-2">
                             {certificate.title}
                         </h2>
                         <p className="text-gray-400 text-sm mt-1">Issued by {certificate.issuer}</p>
@@ -276,7 +276,7 @@ export const CertificatesSection = () => {
         >
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="text-center mb-12">
-                    <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500 mb-3">
+                    <h1 className="text-3xl font-bold text-white mb-3">
                         Certifications & Achievements
                     </h1>
                     <p className="text-gray-400">
@@ -343,21 +343,21 @@ export const CertificatesSection = () => {
                 <div className="text-center mt-10">
                     <div className="inline-flex items-center gap-6 px-6 py-3 rounded-xl bg-white/5 border border-white/10">
                         <div className="text-center">
-                            <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                            <div className="text-xl font-bold text-white">
                                 {certificates.length}
                             </div>
                             <div className="text-sm text-gray-400">Total Items</div>
                         </div>
                         <div className="w-px h-8 bg-white/20"></div>
                         <div className="text-center">
-                            <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                            <div className="text-xl font-bold text-white">
                                 {certificates.filter(c => c.type === 'certificate').length}
                             </div>
                             <div className="text-sm text-gray-400">Certificates</div>
                         </div>
                         <div className="w-px h-8 bg-white/20"></div>
                         <div className="text-center">
-                            <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                            <div className="text-xl font-bold text-white">
                                 {certificates.filter(c => c.type === 'achievement').length}
                             </div>
                             <div className="text-sm text-gray-400">Achievements</div>

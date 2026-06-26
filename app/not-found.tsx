@@ -14,7 +14,7 @@ export default function NotFound() {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-[150px] md:text-[200px] font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-cyan-500 to-blue-500 filter drop-shadow-[0_0_30px_rgba(112,66,248,0.3)]"
+          className="text-[150px] md:text-[200px] font-black leading-none text-white filter drop-shadow-[0_0_30px_rgba(112,66,248,0.3)]"
         >
           404
         </motion.div>

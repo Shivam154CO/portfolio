@@ -54,7 +54,7 @@ export async function getStatusUpdates(): Promise<StatusData[]> {
 
 export async function getSkills(): Promise<Skill[]> {
     try {
-        const { data, error } = await supabase.from('skills').select('*');
+        const { data, error } = await supabase.from('skills').select('*').order('id', { ascending: false });
         if (error) throw error;
         return data;
     } catch (err) {
@@ -76,7 +76,7 @@ export async function getProjects(): Promise<Project[]> {
 
 export async function getTimelineData(): Promise<TimelineItem[]> {
     try {
-        const { data, error } = await supabase.from('timeline_items').select('*').order('order_id', { ascending: false });
+        const { data, error } = await supabase.from('timeline_items').select('*').order('id', { ascending: false });
         if (error) throw error;
         return data;
     } catch (err) {

@@ -7,7 +7,7 @@ import { getSkills } from '@/lib/actions';
 const SkillText = memo(() => (
   <div className="text-center mb-12 relative">
     <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/5 to-cyan-500/5 blur-xl rounded-full" />
-    <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 relative z-10">
+    <h2 className="text-4xl md:text-5xl font-bold text-white relative z-10">
       Skills & Technologies
     </h2>
     <p className="text-lg text-gray-400 mt-3 relative z-10">Tools that power my creations</p>
@@ -106,7 +106,7 @@ const SkillDataProvider = memo(({ src, name, width, height, index, category }: S
           ) : (
             <>
               <div className={`absolute inset-0 rounded-lg ${colors.bg} opacity-60`} />
-              <span className={`text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br ${colors.gradient} relative z-10`}>
+              <span className={`text-lg font-bold text-white relative z-10`}>
                 {name.substring(0, 1)}
               </span>
             </>
@@ -211,7 +211,7 @@ export const Skills = () => {
         </div>
         <div className="w-full">
             <div className="text-center mb-8">
-                <h3 className={`text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${currentProps.gradient}`}>
+                <h3 className={`text-2xl font-bold text-white`}>
                     {activeCategory === 'All Skills' ? 'All Technologies' : activeCategory}
                 </h3>
                 <p className="text-gray-400 text-sm mt-2">{filteredSkills.length} {filteredSkills.length === 1 ? 'skill' : 'skills'}</p>

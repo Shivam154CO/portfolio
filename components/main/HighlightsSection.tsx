@@ -64,7 +64,7 @@ const fetchMetrics = async (): Promise<Metric[]> => {
   const { data, error } = await supabase
     .from('metrics')
     .select('*')
-    .order('id', { ascending: true });
+    .order('id', { ascending: false });
 
   if (error) {
     console.error('Error fetching metrics:', error);
@@ -101,7 +101,7 @@ export const HighlightsSection = () => {
     <section id="highlights" className="relative flex flex-col items-center justify-center py-16 font-sans overflow-hidden">
       <div className="container mx-auto px-4 max-w-4xl relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Proven Results
           </h2>
           <p className="text-gray-400 max-w-md mx-auto">
@@ -128,7 +128,7 @@ export const HighlightsSection = () => {
                   {metric.icon === 'users' && <UsersIcon className="w-6 h-6 text-white" />}
                   {metric.icon === 'award' && <AwardIcon className="w-6 h-6 text-white" />}
                 </div>
-                <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-200 mb-1">
+                <div className="text-2xl font-bold text-white mb-1">
                   {metric.value}
                 </div>
                 <div className="text-gray-300 font-semibold text-sm">{metric.label}</div>

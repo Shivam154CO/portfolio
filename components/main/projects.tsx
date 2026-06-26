@@ -49,7 +49,7 @@ export const ProjectsSection = () => {
         <section id="projects" className="py-20 px-4 flex flex-col items-center overflow-hidden">
             <div className="container mx-auto max-w-6xl">
                 <div className="text-center mb-16 px-4">
-                    <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-500 mb-6 py-2 leading-tight">
+                    <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 py-2 leading-tight">
                         My Portfolio
                     </h1>
                     <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">

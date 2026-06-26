@@ -177,7 +177,7 @@ export const AboutMeSection = () => {
             animate="visible"
             className="text-center mb-16"
           >
-            <h2 className="text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+            <h2 className="text-[48px] font-extrabold text-white">
               About Me
             </h2>
           </motion.div>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import confetti from "canvas-confetti";
 import { submitContactForm } from "@/lib/actions";
 
-const TEXT_GRADIENT_CLASS = "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400";
+const TEXT_GRADIENT_CLASS = "text-white";
 const BUTTON_GRADIENT_ACTIVE = "bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 hover:scale-[1.01] hover:shadow-lg hover:shadow-cyan-500/50";
 
 const FLATICON_IMAGES = {
@@ -63,7 +63,7 @@ const ContactLink: React.FC<ContactLinkProps> = ({ iconUrl, title, subtitle, hre
         />
       </div>
       <div className="flex flex-col justify-center">
-        <span className="text-white font-semibold text-lg group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-cyan-400 transition-all duration-300">
+        <span className="text-white font-semibold text-lg transition-all duration-300">
           {title}
         </span>
         <span className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
@@ -129,7 +129,7 @@ export default function ContactUsSection() {
   return (
     <div className="min-h-screen bg-transparent text-white p-4 md:p-8 flex flex-col items-center justify-center font-inter">
       <div className="text-center mb-12 px-4">
-        <h1 className={`text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500 mb-3`}>
+        <h1 className={`text-4xl font-bold text-white mb-3`}>
           Get in Touch
         </h1>
         <p className="text-gray-400 text-base md:text-lg">

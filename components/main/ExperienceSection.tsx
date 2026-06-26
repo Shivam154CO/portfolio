@@ -203,7 +203,7 @@ export const ExperienceSection = () => {
         <FloatingParticles />
         <div className="container mx-auto max-w-4xl relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-4 tracking-tight">
+            <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tight">
               Professional Journey
             </h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed font-medium">A chronological evolution through technologies and impactful roles.</p>

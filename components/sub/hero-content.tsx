@@ -95,11 +95,11 @@ export const HeroContent = () => {
   const defaultTitle = (
     <>
       Transforming{" "}
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
+      <span className="text-white">
         Ideas
       </span>{" "}
       into Innovative User{" "}
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
+      <span className="text-white">
         Experiences
       </span>
     </>

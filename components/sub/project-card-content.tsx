@@ -116,7 +116,7 @@ export const ProjectCardContent = memo(({ project }: { project: any }) => {
                         </span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-cyan-400 transition-all duration-300">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 transition-all duration-300">
                         {project.title}
                     </h3>
 
