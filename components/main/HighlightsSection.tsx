@@ -98,10 +98,10 @@ export const HighlightsSection = () => {
   }, [loadData]);
 
   return (
-    <section id="highlights" className="relative flex flex-col items-center justify-center py-16 font-sans overflow-hidden">
+    <section id="highlights" className="relative flex flex-col items-center justify-center py-10 font-sans overflow-hidden">
       <div className="container mx-auto px-4 max-w-4xl relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+          <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
             Proven Results
           </h2>
           <p className="text-gray-400 max-w-md mx-auto">

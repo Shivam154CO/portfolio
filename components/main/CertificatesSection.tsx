@@ -272,7 +272,7 @@ export const CertificatesSection = () => {
     return (
         <section
             id="certificates"
-            className="flex flex-col items-center justify-center py-16 min-h-screen font-sans"
+            className="flex flex-col items-center justify-center py-10 font-sans"
         >
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="text-center mb-12">

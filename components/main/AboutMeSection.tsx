@@ -36,7 +36,7 @@ const ProfileVisual = ({ profileData }: { profileData: any }) => (
   >
     <div className="relative z-10 w-64 h-64">
       <div
-        className="w-full h-full rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-[0_0_80px_rgba(59,130,246,0.2)]"
+        className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 shadow-lg"
       >
         <Image
           src={profileData?.profile_image || "/profile1.jpg"}
@@ -64,7 +64,7 @@ const ProfileVisual = ({ profileData }: { profileData: any }) => (
             <span className="text-slate-200 font-medium text-sm tracking-wide">
               {profileData?.title || "Developer"}
             </span>
-            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 group-hover:w-12"></div>
+            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-12"></div>
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@ const ProfileVisual = ({ profileData }: { profileData: any }) => (
         </a>
       </div>
       <div className="flex items-center space-x-2 pt-2 text-gray-300">
-        <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -140,13 +140,13 @@ const AboutMeText = ({ profileData }: { profileData: any }) => (
     >
       <a
         href="/projects"
-        className="px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-700 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105"
+        className="px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
       >
         View My Work
       </a>
       <a
         href="/contact"
-        className="px-6 py-3 rounded-lg font-semibold text-white border border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-300"
+        className="px-6 py-3 rounded-lg font-semibold text-white border border-white/20 hover:bg-white/5 transition-all duration-300"
       >
         Let&apos;s Connect
       </a>
@@ -169,7 +169,7 @@ export const AboutMeSection = () => {
     <>
       <StarsCanvas />
       
-      <section id="about" className="relative flex flex-col items-center justify-center py-20 min-h-screen font-sans w-full z-10">
+      <section id="about" className="relative flex flex-col items-center justify-center py-10 font-sans w-full z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
           <motion.div
             variants={slideInFromTop}

@@ -36,7 +36,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-[#03001427] backdrop-blur-md shadow-lg shadow-[#2A0E61]/50 z-50">
+    <nav className="fixed top-0 left-0 w-full bg-[#03030327] backdrop-blur-md border-b border-white/5 z-50">
       <div className="flex items-center justify-between h-[70px] px-5 md:px-10">
         <a
           href="/"
@@ -53,16 +53,16 @@ export const Navbar = () => {
           />
         </a>
 
-        <div className="hidden md:flex items-center gap-8 bg-[rgba(3,0,20,0.37)] px-8 py-2 rounded-full border border-[rgba(112,66,248,0.38)] text-gray-200">
+        <div className="hidden md:flex items-center gap-8 bg-white/5 px-8 py-2 rounded-full border border-white/10 text-gray-200">
           {NAV_LINKS.map((link) => (
             <a
               key={link.title}
               href={link.link}
               onClick={(e) => handleNavClick(link.link, e)}
-              className="relative hover:text-[rgb(112,66,248)] transition-all font-medium cursor-pointer hover:scale-105 duration-300 group"
+              className="relative hover:text-white transition-all hover:scale-110 duration-300 ease-out"
             >
               {link.title}
-              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(112,66,248)] transition-all duration-300 group-hover:w-full" />
+              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </div>
@@ -76,7 +76,7 @@ export const Navbar = () => {
               rel="noopener noreferrer"
               className="flex items-center"
             >
-              <Icon className="h-6 w-6 text-white hover:text-[rgb(112,66,248)] transition-all hover:scale-110 duration-300 ease-out" />
+              <Icon className="h-6 w-6 text-white hover:text-gray-400 transition-all hover:scale-110 duration-300 ease-out" />
             </a>
           ))}
         </div>
@@ -103,10 +103,10 @@ export const Navbar = () => {
                 key={link.title}
                 href={link.link}
                 onClick={(e) => handleNavClick(link.link, e)}
-                className="relative hover:text-[rgb(112,66,248)] transition-all cursor-pointer hover:scale-105 duration-300 group"
+                className="relative hover:text-white transition-all cursor-pointer hover:scale-105 duration-300 group"
               >
                 {link.title}
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(112,66,248)] transition-all duration-300 group-hover:w-full" />
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>

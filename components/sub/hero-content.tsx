@@ -124,7 +124,7 @@ export const HeroContent = () => {
       <div className="w-full flex flex-col gap-4 sm:gap-5 justify-center m-auto text-center lg:text-start">
         <motion.div
           variants={slideInFromTop}
-          className="flex items-center justify-center lg:justify-start gap-2 py-[6px] px-[6px] border border-[#7042f88b] opacity-[0.9] rounded-lg max-w-fit mx-auto lg:mx-0"
+          className="flex items-center justify-center lg:justify-start gap-2 py-[6px] px-[6px] border border-white/10 opacity-[0.9] rounded-lg max-w-fit mx-auto lg:mx-0"
         >
           <Image
             src="/coding.png"
@@ -161,7 +161,7 @@ export const HeroContent = () => {
               <button
                 key={status.id}
                 onClick={() => handleStatusClick(status)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-purple-500/50 hover:bg-white/10 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 group"
               >
                 {getIconComponent(status.type)}
                 <span className="text-[10px] sm:text-xs text-gray-300 group-hover:text-white transition-colors">
@@ -173,15 +173,7 @@ export const HeroContent = () => {
           </motion.div>
         )}
 
-        <Magnetic>
-          <motion.button
-            variants={slideInFromLeft(1)}
-            onClick={() => setIsResumeOpen(true)}
-            className="py-3 sm:py-4 px-4 sm:px-5 md:px-6 bg-transparent border-[#7D43FF] border-2 text-white text-sm sm:text-base font-medium rounded-full shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#7D43FF]/10 active:scale-95 max-w-[100px] sm:max-w-[110px] md:max-w-[180px] mx-auto lg:mx-0 flex items-center justify-center cursor-pointer"
-          >
-            View Resume
-          </motion.button>
-        </Magnetic>
+
       </div>
 
       <motion.div

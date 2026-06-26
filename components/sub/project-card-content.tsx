@@ -41,6 +41,7 @@ DesktopFrame.displayName = "DesktopFrame";
 
 export const ProjectCardContent = memo(({ project }: { project: any }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isExpanded, setIsExpanded] = useState(false);
     const allImages = useMemo(() => {
         let images: string[] = [];
         if (Array.isArray(project.images)) images = project.images;
@@ -120,9 +121,21 @@ export const ProjectCardContent = memo(({ project }: { project: any }) => {
                         {project.title}
                     </h3>
 
-                    <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-6 line-clamp-3 overflow-hidden">
-                        {project.description}
-                    </p>
+                    <div className="relative">
+                        <p className={`text-gray-400 text-sm sm:text-base leading-relaxed ${!isExpanded ? 'line-clamp-3' : ''} overflow-hidden transition-all duration-300`}>
+                            {project.description}
+                        </p>
+                        {project.description && project.description.length > 100 && (
+                            <button 
+                                onClick={() => setIsExpanded(!isExpanded)}
+                                className="text-cyan-500 hover:text-cyan-400 text-xs font-bold mt-2 mb-4 transition-colors"
+                            >
+                                {isExpanded ? 'Show Less' : 'Show More'}
+                            </button>
+                        )}
+                        {!isExpanded && project.description && project.description.length > 100 && <div className="mb-6" />}
+                        {isExpanded && <div className="mb-6" />}
+                    </div>
 
                     <div className="flex flex-wrap gap-2 mb-8 mt-auto">
                         {project.tech_stack_names?.map((techName: string) => (

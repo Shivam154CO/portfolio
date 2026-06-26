@@ -46,11 +46,11 @@ export const ProjectsSection = () => {
     }
 
     return (
-        <section id="projects" className="py-20 px-4 flex flex-col items-center overflow-hidden">
+        <section id="projects" className="py-12 px-4 flex flex-col items-center overflow-hidden">
             <div className="container mx-auto max-w-6xl">
                 <div className="text-center mb-16 px-4">
                     <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 py-2 leading-tight">
-                        My Portfolio
+                        My Projects
                     </h1>
                     <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
                         Explore my journey through full-stack development, mobile experiences, and modern software architectures.
@@ -64,8 +64,8 @@ export const ProjectsSection = () => {
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
                                 className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-all duration-300 ${activeFilter === filter
-                                        ? "bg-gradient-to-r from-purple-500 to-cyan-500 text-white shadow-lg"
-                                        : "text-gray-400 hover:text-white"
+                                    ? "bg-white/10 text-white border border-white/20 shadow-lg"
+                                    : "text-gray-400 hover:text-white"
                                     }`}
                             >
                                 {filter}

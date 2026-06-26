@@ -136,9 +136,9 @@ const TimelineItem = memo(({ item, isLast, index, isActive, onActivate }: { item
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4 text-sm text-gray-300">
               <div className="flex items-center gap-2 font-medium">
-                <CalendarIcon className="w-4 h-4" /> <span>{item.dateRange}</span>
+                <CalendarIcon className="w-4 h-4" /> <span>{item.dateRange || item.date_range || (item as any).daterange || item.duration || (item as any).date}</span>
               </div>
-              <span className="text-gray-500">•</span>
+
               <div className="flex items-center gap-2">
                 <MapPinIcon className="w-4 h-4" /> <span>{item.location}</span>
               </div>
@@ -199,7 +199,7 @@ export const ExperienceSection = () => {
     );
 
     return (
-      <section id="experience" className="relative py-20 px-4 overflow-hidden">
+      <section id="experience" className="relative py-12 px-4 overflow-hidden">
         <FloatingParticles />
         <div className="container mx-auto max-w-4xl relative z-10">
           <div className="text-center mb-16">
@@ -216,7 +216,7 @@ export const ExperienceSection = () => {
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`px-6 py-2 rounded-xl text-sm font-bold capitalize transition-all duration-300 ${
-                    activeFilter === filter ? "bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-xl" : "text-gray-400 hover:text-white"
+                    activeFilter === filter ? "bg-white/10 text-white border border-white/20 shadow-xl" : "text-gray-400 hover:text-white"
                   }`}
                 >
                   {filter}
@@ -226,7 +226,7 @@ export const ExperienceSection = () => {
           </div>
 
           <div className="relative">
-            <div className="absolute left-5 top-0 bottom-0 w-[1px] bg-gradient-to-b from-cyan-400/20 via-purple-500/30 to-cyan-400/20" />
+            <div className="absolute left-5 top-0 bottom-0 w-[1px] bg-white/10" />
             <div className="space-y-4">
               {filteredData.map((item, index) => (
                 <TimelineItem 

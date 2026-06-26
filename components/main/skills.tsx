@@ -48,20 +48,7 @@ const SkillDataProvider = memo(({ src, name, width, height, index, category }: S
   }, []);
 
   const getCategoryColor = (cat: any) => {
-    switch (cat) {
-      case 'Programming Languages':
-        return { gradient: 'from-cyan-500 to-blue-500', bg: 'bg-cyan-500/10' };
-      case 'Frontend':
-        return { gradient: 'from-purple-500 to-pink-500', bg: 'bg-purple-500/10' };
-      case 'Backend':
-        return { gradient: 'from-green-500 to-emerald-500', bg: 'bg-green-500/10' };
-      case 'Databases & Cloud':
-        return { gradient: 'from-orange-500 to-red-500', bg: 'bg-orange-500/10' };
-      case 'Tools & DevOps':
-        return { gradient: 'from-yellow-500 to-amber-500', bg: 'bg-yellow-500/10' };
-      default:
-        return { gradient: 'from-gray-500 to-gray-600', bg: 'bg-gray-500/10' };
-    }
+    return { gradient: 'from-white/10 to-white/5', bg: 'bg-white/5' };
   };
 
   const colors = getCategoryColor(category);
@@ -175,20 +162,13 @@ export const Skills = () => {
   );
 
   const getCategoryProps = (category: string) => {
-    switch (category) {
-      case 'Programming Languages': return { gradient: 'from-cyan-500 to-blue-500', border: 'border-cyan-500/20' };
-      case 'Frontend': return { gradient: 'from-purple-500 to-pink-500', border: 'border-purple-500/20' };
-      case 'Backend': return { gradient: 'from-green-500 to-emerald-500', border: 'border-green-500/20' };
-      case 'Databases & Cloud': return { gradient: 'from-orange-500 to-red-500', border: 'border-orange-500/20' };
-      case 'Tools & DevOps': return { gradient: 'from-yellow-500 to-amber-500', border: 'border-yellow-500/20' };
-      default: return { gradient: 'from-cyan-500 to-purple-500', border: 'border-gray-500/20' };
-    }
+    return { gradient: 'from-white/20 to-white/10', border: 'border-white/20' };
   };
 
   const currentProps = getCategoryProps(activeCategory);
 
   return (
-    <section id="skills" className="flex flex-col items-center justify-center py-16 min-h-screen relative">
+    <section id="skills" className="flex flex-col items-center justify-center py-10 relative">
       <div className="w-full max-w-4xl px-4 flex flex-col items-center">
         <SkillText />
         <div className="w-full max-w-2xl mb-12">

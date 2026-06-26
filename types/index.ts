@@ -54,6 +54,7 @@ export interface TimelineItem {
     title: string;
     institution: string;
     dateRange: string;
+    date_range?: string;
     location: string;
     duration: string;
     description: string[]; 
